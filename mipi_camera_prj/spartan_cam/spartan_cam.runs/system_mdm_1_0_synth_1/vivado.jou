@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Fri May 31 14:03:02 2019
+# Process ID: 8992
+# Current directory: D:/xilinx/project/spartan_cam/spartan_cam.runs/system_mdm_1_0_synth_1
+# Command line: vivado.exe -log system_mdm_1_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_mdm_1_0.tcl
+# Log file: D:/xilinx/project/spartan_cam/spartan_cam.runs/system_mdm_1_0_synth_1/system_mdm_1_0.vds
+# Journal file: D:/xilinx/project/spartan_cam/spartan_cam.runs/system_mdm_1_0_synth_1\vivado.jou
+#-----------------------------------------------------------
+source system_mdm_1_0.tcl -notrace

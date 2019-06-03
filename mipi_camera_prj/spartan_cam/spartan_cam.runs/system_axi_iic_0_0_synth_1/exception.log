@@ -1,0 +1,4 @@
+ERROR: Exception caught trying to open file D:\xilinx\project\spartan_cam\spartan_cam.runs\system_axi_iic_0_0_synth_1/runme.log
+	Exception name: Error
+	Exception error code: 70
+	Exception message: 没有权限
