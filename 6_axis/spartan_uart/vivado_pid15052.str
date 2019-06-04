@@ -1,0 +1,150 @@
+/*
+
+Xilinx Vivado v2018.2 (64-bit) [Major: 2018, Minor: 2]
+SW Build: 2258646 on Thu Jun 14 20:03:12 MDT 2018
+IP Build: 2256618 on Thu Jun 14 22:10:49 MDT 2018
+
+Process ID: 15052
+License: Customer
+
+Current time: 	Tue Jun 04 13:53:56 CST 2019
+Time zone: 	China Standard Time (Asia/Shanghai)
+
+OS: Windows 10
+OS Version: 10.0
+OS Architecture: amd64
+Available processors (cores): 8
+
+Screen size: 1536x864
+Screen resolution (DPI): 96
+Available screens: 2
+Available disk space: 35 GB
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+
+Java version: 	1.8.0_112 64-bit
+Java home: 	C:/Xilinx/Vivado/2018.2/tps/win64/jre
+Java executable location: 	C:/Xilinx/Vivado/2018.2/tps/win64/jre/bin/java.exe
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 2 GB
+
+
+User name: 	dell
+User home directory: C:/Users/dell
+User working directory: C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart
+User country: 	CN
+User language: 	zh
+User locale: 	zh_CN
+
+RDI_BASEROOT: C:/Xilinx/Vivado
+HDI_APPROOT: C:/Xilinx/Vivado/2018.2
+RDI_DATADIR: C:/Xilinx/Vivado/2018.2/data
+RDI_BINDIR: C:/Xilinx/Vivado/2018.2/bin
+
+Vivado preferences file location: C:/Users/dell/AppData/Roaming/Xilinx/Vivado/2018.2/vivado.xml
+Vivado preferences directory: C:/Users/dell/AppData/Roaming/Xilinx/Vivado/2018.2/
+Vivado layouts directory: C:/Users/dell/AppData/Roaming/Xilinx/Vivado/2018.2/layouts
+PlanAhead jar file location: 	C:/Xilinx/Vivado/2018.2/lib/classes/planAhead.jar
+Vivado log file location: 	C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart/vivado.log
+Vivado journal file location: 	C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart/vivado.jou
+Engine tmp dir: 	C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart/.Xil/Vivado-15052-DESKTOP-JG260B6
+
+Xilinx Environment Variables
+----------------------------
+XILINX: C:/Xilinx/Vivado/2018.2/ids_lite/ISE
+XILINX_DSP: C:/Xilinx/Vivado/2018.2/ids_lite/ISE
+XILINX_PLANAHEAD: C:/Xilinx/Vivado/2018.2
+XILINX_SDK: C:/Xilinx/SDK/2018.2
+XILINX_VIVADO: C:/Xilinx/Vivado/2018.2
+XILINX_VIVADO_HLS: C:/Xilinx/Vivado/2018.2
+
+
+GUI allocated memory:	214 MB
+GUI max memory:		3,052 MB
+Engine allocated memory: 575 MB
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// TclEventType: PROJECT_OPEN_DIALOG
+// [GUI Memory]: 56 MB (+56682kb) [00:00:06]
+// [Engine Memory]: 498 MB (+370485kb) [00:00:06]
+// bx (ck):  Open Project : addNotify
+// Opening Vivado Project: C:\Users\dell\Desktop\xilinx\test\IO_LED_sw\spartan_uart\spartan_uart.xpr. Version: Vivado v2018.2 
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// Tcl Message: open_project C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart/spartan_uart.xpr 
+// [Engine Memory]: 560 MB (+39538kb) [00:00:08]
+// TclEventType: MSGMGR_MOVEMSG
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_CURRENT
+// HMemoryUtils.trashcanNow. Engine heap size: 626 MB. GUI used memory: 33 MB. Current time: 6/4/19 1:53:58 PM CST
+// TclEventType: FILE_SET_CHANGE
+// [Engine Memory]: 626 MB (+39274kb) [00:00:13]
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_NEW
+// [Engine Memory]: 675 MB (+18239kb) [00:00:16]
+// [GUI Memory]: 63 MB (+3410kb) [00:00:18]
+// [Engine Memory]: 709 MB (+948kb) [00:00:18]
+// [GUI Memory]: 68 MB (+2157kb) [00:00:19]
+// Tcl Message: open_project C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart/spartan_uart.xpr 
+// Tcl Message: INFO: [Project 1-313] Project file moved from 'C:/Users/dell/Desktop/spartan_uart' since last save. 
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2018.2/data/ip'. 
+// Tcl Message: open_project: Time (s): cpu = 00:00:24 ; elapsed = 00:00:14 . Memory (MB): peak = 974.465 ; gain = 208.664 
+// Project name: spartan_uart; location: C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart; part: xc7s15ftgb196-1
+// [Engine Memory]: 747 MB (+1981kb) [00:00:22]
+dismissDialog("Open Project"); // bx (ck)
+// TclEventType: DG_ANALYSIS_MSG_RESET
+// [GUI Memory]: 84 MB (+13492kb) [00:00:24]
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Open Hardware Manager]", 21, true); // u (O, ck) - Node
+// Run Command: PAResourceCommand.PACommandNames_OPEN_HARDWARE_MANAGER
+// Tcl Command: 'rdi::info_commands get_hw_probes'
+// Tcl Command: 'load_features labtools'
+// TclEventType: LOAD_FEATURE
+// bx (ck):  Open Hardware Manager : addNotify
+// TclEventType: HW_SESSION_OPEN
+// TclEventType: DG_GRAPH_GENERATED
+// Tcl Message: open_hw 
+dismissDialog("Open Hardware Manager"); // bx (ck)
+// Tcl Message: update_compile_order -fileset sources_1 
+selectButton(PAResourceOtoP.ProgramDebugTab_OPEN_TARGET, "Open target"); // h (cM, ck)
+selectMenuItem(PAResourceCommand.PACommandNames_AUTO_CONNECT_TARGET, "Auto Connect"); // ad (aj, ck)
+// Run Command: PAResourceCommand.PACommandNames_AUTO_CONNECT_TARGET
+// bx (ck):  Auto Connect : addNotify
+// Tcl Message: connect_hw_server 
+// Tcl Message: INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121 
+// Tcl Message: INFO: [Labtools 27-2222] Launching hw_server... 
+// Tcl Message: INFO: [Labtools 27-2221] Launch Output:  ****** Xilinx hw_server v2018.2   **** Build date : Jun 14 2018-20:42:52     ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.   
+// TclEventType: HW_SERVER_UPDATE
+// TclEventType: HW_TARGET_CHANGE
+// Tcl Message: open_hw_target 
+// Tcl Message: INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/000018627ad001 
+// Tcl Message: ERROR: [Labtools 27-2269] No devices detected on target localhost:3121/xilinx_tcf/Xilinx/000018627ad001. Check cable connectivity and that the target board is powered up then use the disconnect_hw_server and connect_hw_server to re-register this hardware target. 
+// Tcl Message: ERROR: [Common 17-39] 'open_hw_target' failed due to earlier errors. 
+// CommandFailedException: ERROR: [Common 17-69] Command failed: ERROR: [Common 17-39] 'open_hw_target' failed due to earlier errors.  
+// a (ck): Critical Messages: addNotify
+dismissDialog("Auto Connect"); // bx (ck)
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (a)
+dismissDialog("Critical Messages"); // a (ck)
+// TclEventType: HW_TARGET_NEEDS_CLOSE
+// TclEventType: HW_TARGET_CLOSE
+// TclEventType: HW_DEVICE_CHANGE
+// TclEventType: HW_SYSMON_ADD
+// TclEventType: HW_TARGET_UPDATE
+// [Engine Memory]: 1,376 MB (+620738kb) [00:00:41]
+// HMemoryUtils.trashcanNow. Engine heap size: 1,380 MB. GUI used memory: 53 MB. Current time: 6/4/19 1:54:29 PM CST
+selectTreeTable(PAResourceEtoH.HardwareTreePanel_HARDWARE_TREE_TABLE, "xc7s15_0 (1) ; Not programmed", 2, "xc7s15_0 (1)", 0, true); // t (O, ck) - Node
+selectTreeTable(PAResourceEtoH.HardwareTreePanel_HARDWARE_TREE_TABLE, "xc7s15_0 (1) ; Not programmed", 2, "xc7s15_0 (1)", 0, true, false, false, false, true, false); // t (O, ck) - Popup Trigger - Node
+selectMenuItem(PAResourceCommand.PACommandNames_PROGRAM_FPGA, "Program Device..."); // ad (aj, ck)
+// Run Command: PAResourceCommand.PACommandNames_PROGRAM_FPGA
+// bB (ck): Program Device: addNotify
+dismissDialog("Program Device"); // bB (ck)
+// [GUI Memory]: 90 MB (+1894kb) [00:01:57]
+// [GUI Memory]: 95 MB (+524kb) [00:08:32]
+// [GUI Memory]: 100 MB (+254kb) [00:17:23]
+// HMemoryUtils.trashcanNow. Engine heap size: 1,427 MB. GUI used memory: 54 MB. Current time: 6/4/19 2:24:34 PM CST

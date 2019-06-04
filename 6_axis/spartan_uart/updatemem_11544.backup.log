@@ -1,0 +1,19 @@
+#-----------------------------------------------------------
+# updatemem v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# 
+# Start of session at: Tue Jun  4 13:35:31 2019
+# Process ID: 11544
+# Current directory: C:/Users/dell/Desktop/spartan_uart
+# Command line: updatemem.exe -mode batch -source C:/Xilinx/SDK/2018.2/scripts/updatemem/main.tcl -notrace -tclargs -meminfo C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/system_wrapper_hw_platform_0/system_wrapper.mmi -data C:/Xilinx/SDK/2018.2/data/embeddedsw/lib/microblaze/mb_bootloop_le.elf -proc system_i/microblaze_0 -bit C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/system_wrapper_hw_platform_0/system_wrapper.bit -out C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/system_wrapper_hw_platform_0/download.bit -force
+# Log file: C:/Users/dell/Desktop/spartan_uart/updatemem.log
+# Journal file: C:/Users/dell/Desktop/spartan_uart\updatemem.jou
+#-----------------------------------------------------------
+source C:/Xilinx/SDK/2018.2/scripts/updatemem/main.tcl -notrace
+ Loading bitfile C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/system_wrapper_hw_platform_0/system_wrapper.bit
+Loading data files...
+Updating memory content...
+Creating bitstream...
+Writing bitstream C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/system_wrapper_hw_platform_0/download.bit...
+  update_mem: Time (s): cpu = 00:00:07 ; elapsed = 00:00:10 . Memory (MB): peak = 505.797 ; gain = 444.301
+INFO: [Common 17-206] Exiting updatemem at Tue Jun  4 13:35:40 2019...
