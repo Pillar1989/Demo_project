@@ -1,0 +1,45 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Tue Jun  4 13:33:39 2019
+# Process ID: 15044
+# Current directory: C:/Users/dell/Desktop/spartan_uart
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent15604 C:\Users\dell\Desktop\spartan_uart\spartan_uart.xpr
+# Log file: C:/Users/dell/Desktop/spartan_uart/vivado.log
+# Journal file: C:/Users/dell/Desktop/spartan_uart\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/dell/Desktop/spartan_uart/spartan_uart.xpr
+file mkdir C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk
+file copy -force C:/Users/dell/Desktop/spartan_uart/spartan_uart.runs/impl_1/system_wrapper.sysdef C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/system_wrapper.hdf
+
+update_compile_order -fileset sources_1
+launch_sdk -workspace C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk -hwspec C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/system_wrapper.hdf
+open_hw
+connect_hw_server
+open_hw_target
+set_property PROGRAM.FILE {C:/Users/dell/Desktop/spartan_uart/spartan_uart.runs/impl_1/system_wrapper.bit} [get_hw_devices xc7s15_0]
+current_hw_device [get_hw_devices xc7s15_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7s15_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7s15_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7s15_0]
+set_property PROGRAM.FILE {C:/Users/dell/Desktop/spartan_uart/spartan_uart.runs/impl_1/system_wrapper.bit} [get_hw_devices xc7s15_0]
+program_hw_devices [get_hw_devices xc7s15_0]
+refresh_hw_device [lindex [get_hw_devices xc7s15_0] 0]
+import_files -norecurse C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/spartan_iic/Release/spartan_iic.elf
+set_property SCOPED_TO_REF system [get_files -all -of_objects [get_fileset sources_1] {C:/Users/dell/Desktop/spartan_uart/spartan_uart.srcs/sources_1/imports/Release/spartan_iic.elf}]
+set_property SCOPED_TO_CELLS { microblaze_0 } [get_files -all -of_objects [get_fileset sources_1] {C:/Users/dell/Desktop/spartan_uart/spartan_uart.srcs/sources_1/imports/Release/spartan_iic.elf}]
+reset_run impl_1 -prev_step 
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+wait_on_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7s15_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7s15_0]
+set_property PROGRAM.FILE {C:/Users/dell/Desktop/spartan_uart/spartan_uart.runs/impl_1/system_wrapper.bit} [get_hw_devices xc7s15_0]
+program_hw_devices [get_hw_devices xc7s15_0]
+refresh_hw_device [lindex [get_hw_devices xc7s15_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7s15_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7s15_0]
+set_property PROGRAM.FILE {C:/Users/dell/Desktop/spartan_uart/spartan_uart.runs/impl_1/system_wrapper.bit} [get_hw_devices xc7s15_0]
+program_hw_devices [get_hw_devices xc7s15_0]
+refresh_hw_device [lindex [get_hw_devices xc7s15_0] 0]

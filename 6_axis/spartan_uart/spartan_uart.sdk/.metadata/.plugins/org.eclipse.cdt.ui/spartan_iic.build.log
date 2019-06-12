@@ -1,0 +1,25 @@
+13:37:32 **** Incremental Build of configuration Release for project spartan_iic ****
+make all 
+'Building file: ../src/main.c'
+'Invoking: MicroBlaze gcc compiler'
+mb-gcc -Wall -O2 -c -fmessage-length=0 -MT"src/main.o" -I../../spartan_iic_bsp/microblaze_0/include -mlittle-endian -mcpu=v10.0 -mxl-soft-mul -Wl,--no-relax -ffunction-sections -fdata-sections -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+../src/main.c: In function 'main':
+../src/main.c:59:6: warning: variable 'cnt' set but not used [-Wunused-but-set-variable]
+  int cnt = 0;
+      ^~~
+'Finished building: ../src/main.c'
+' '
+'Building target: spartan_iic.elf'
+'Invoking: MicroBlaze gcc linker'
+mb-gcc -Wl,-T -Wl,../src/lscript.ld -L../../spartan_iic_bsp/microblaze_0/lib -mlittle-endian -mcpu=v10.0 -mxl-soft-mul -Wl,--no-relax -Wl,--gc-sections -o "spartan_iic.elf"  ./src/main.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: spartan_iic.elf'
+' '
+'Invoking: MicroBlaze Print Size'
+mb-size spartan_iic.elf  |tee "spartan_iic.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+   3836	    268	   3112	   7216	   1c30	spartan_iic.elf
+'Finished building: spartan_iic.elf.size'
+' '
+
+13:37:33 Build Finished (took 1s.268ms)
+

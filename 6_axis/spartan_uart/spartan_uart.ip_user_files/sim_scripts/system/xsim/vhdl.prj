@@ -1,0 +1,14 @@
+vhdl xil_defaultlib  \
+"../../../bd/system/ip/system_microblaze_0_0/sim/system_microblaze_0_0.vhd" \
+"../../../bd/system/ip/system_mdm_1_0/sim/system_mdm_1_0.vhd" \
+"../../../bd/system/ip/system_rst_clk_wiz_1_100M_0/sim/system_rst_clk_wiz_1_100M_0.vhd" \
+"../../../bd/system/ip/system_axi_uartlite_0_0/sim/system_axi_uartlite_0_0.vhd" \
+"../../../bd/system/ip/system_axi_uartlite_1_0/sim/system_axi_uartlite_1_0.vhd" \
+"../../../bd/system/ip/system_dlmb_v10_0/sim/system_dlmb_v10_0.vhd" \
+"../../../bd/system/ip/system_ilmb_v10_0/sim/system_ilmb_v10_0.vhd" \
+"../../../bd/system/ip/system_dlmb_bram_if_cntlr_0/sim/system_dlmb_bram_if_cntlr_0.vhd" \
+"../../../bd/system/ip/system_ilmb_bram_if_cntlr_0/sim/system_ilmb_bram_if_cntlr_0.vhd" \
+"../../../bd/system/ip/system_axi_gpio_0_0/sim/system_axi_gpio_0_0.vhd" \
+"../../../bd/system/ip/system_axi_iic_0_0/sim/system_axi_iic_0_0.vhd" \
+
+nosort

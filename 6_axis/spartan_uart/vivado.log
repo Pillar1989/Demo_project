@@ -1,0 +1,38 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Tue Jun  4 13:53:39 2019
+# Process ID: 15052
+# Current directory: C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent8664 C:\Users\dell\Desktop\xilinx\test\IO_LED_sw\spartan_uart\spartan_uart.xpr
+# Log file: C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart/vivado.log
+# Journal file: C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart/spartan_uart.xpr
+INFO: [Project 1-313] Project file moved from 'C:/Users/dell/Desktop/spartan_uart' since last save.
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2018.2/data/ip'.
+open_project: Time (s): cpu = 00:00:24 ; elapsed = 00:00:14 . Memory (MB): peak = 974.465 ; gain = 208.664
+open_hw
+update_compile_order -fileset sources_1
+connect_hw_server
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2018.2
+  **** Build date : Jun 14 2018-20:42:52
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/000018627ad001
+ERROR: [Labtools 27-2269] No devices detected on target localhost:3121/xilinx_tcf/Xilinx/000018627ad001.
+Check cable connectivity and that the target board is powered up then
+use the disconnect_hw_server and connect_hw_server to re-register this hardware target.
+ERROR: [Common 17-39] 'open_hw_target' failed due to earlier errors.

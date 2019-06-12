@@ -1,0 +1,100 @@
+13:34:30 INFO  : Registering command handlers for SDK TCF services
+13:34:31 INFO  : Launching XSCT server: xsct.bat -interactive C:\Users\dell\Desktop\spartan_uart\spartan_uart.sdk\temp_xsdb_launch_script.tcl
+13:34:34 INFO  : XSCT server has started successfully.
+13:34:35 INFO  : Successfully done setting XSCT server connection channel  
+13:34:35 INFO  : Processing command line option -hwspec C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/system_wrapper.hdf.
+13:34:35 INFO  : Successfully done setting SDK workspace  
+13:35:42 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+13:36:09 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+13:36:09 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 000018627ad001" && level==0} -index 0' command is executed.
+13:36:11 INFO  : FPGA configured successfully with bitstream "C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/system_wrapper_hw_platform_0/download.bit"
+13:36:17 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 000018627ad001" && level==0} -index 0' command is executed.
+13:36:17 INFO  : 'fpga -state' command is executed.
+13:36:17 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+13:36:17 INFO  : Jtag cable 'Platform Cable USB 000018627ad001' is selected.
+13:36:17 INFO  : 'jtag frequency' command is executed.
+13:36:17 INFO  : 'configparams mdm-detect-bscan-mask 2' command is executed.
+13:36:17 INFO  : Context for processor 'microblaze_0' is selected.
+13:36:17 INFO  : Processor reset is completed for 'microblaze_0'.
+13:36:17 INFO  : Context for processor 'microblaze_0' is selected.
+13:36:17 INFO  : The application 'C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/spartan_iic/Debug/spartan_iic.elf' is downloaded to processor 'microblaze_0'.
+13:36:17 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+configparams mdm-detect-bscan-mask 2
+targets -set -nocase -filter {name =~ "microblaze*#0" && bscan=="USER2"  && jtag_cable_name =~ "Platform Cable USB 000018627ad001"} -index 0
+rst -processor
+targets -set -nocase -filter {name =~ "microblaze*#0" && bscan=="USER2"  && jtag_cable_name =~ "Platform Cable USB 000018627ad001"} -index 0
+dow C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/spartan_iic/Debug/spartan_iic.elf
+----------------End of Script----------------
+
+13:36:17 INFO  : Memory regions updated for context MicroBlaze #0
+13:36:17 INFO  : Memory regions updated for context MicroBlaze #0
+13:36:17 INFO  : Context for processor 'microblaze_0' is selected.
+13:36:17 INFO  : 'con' command is executed.
+13:36:17 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "microblaze*#0" && bscan=="USER2"  && jtag_cable_name =~ "Platform Cable USB 000018627ad001"} -index 0
+con
+----------------End of Script----------------
+
+13:36:17 INFO  : Launch script is exported to file 'C:\Users\dell\Desktop\spartan_uart\spartan_uart.sdk\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_using_debug_spartan_iic.elf_on_local.tcl'
+13:36:49 INFO  : Disconnected from the channel tcfchan#1.
+13:36:50 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 000018627ad001" && level==0} -index 0' command is executed.
+13:36:50 INFO  : 'fpga -state' command is executed.
+13:36:50 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+13:36:51 INFO  : Jtag cable 'Platform Cable USB 000018627ad001' is selected.
+13:36:51 INFO  : 'jtag frequency' command is executed.
+13:36:51 INFO  : 'configparams mdm-detect-bscan-mask 2' command is executed.
+13:36:51 INFO  : Context for processor 'microblaze_0' is selected.
+13:36:51 INFO  : Processor reset is completed for 'microblaze_0'.
+13:36:51 INFO  : Context for processor 'microblaze_0' is selected.
+13:36:51 INFO  : The application 'C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/spartan_iic/Debug/spartan_iic.elf' is downloaded to processor 'microblaze_0'.
+13:36:51 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+configparams mdm-detect-bscan-mask 2
+targets -set -nocase -filter {name =~ "microblaze*#0" && bscan=="USER2"  && jtag_cable_name =~ "Platform Cable USB 000018627ad001"} -index 0
+rst -processor
+targets -set -nocase -filter {name =~ "microblaze*#0" && bscan=="USER2"  && jtag_cable_name =~ "Platform Cable USB 000018627ad001"} -index 0
+dow C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/spartan_iic/Debug/spartan_iic.elf
+----------------End of Script----------------
+
+13:36:51 INFO  : Memory regions updated for context MicroBlaze #0
+13:36:51 INFO  : Memory regions updated for context MicroBlaze #0
+13:36:51 INFO  : Context for processor 'microblaze_0' is selected.
+13:36:51 INFO  : 'con' command is executed.
+13:36:51 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "microblaze*#0" && bscan=="USER2"  && jtag_cable_name =~ "Platform Cable USB 000018627ad001"} -index 0
+con
+----------------End of Script----------------
+
+13:36:51 INFO  : Launch script is exported to file 'C:\Users\dell\Desktop\spartan_uart\spartan_uart.sdk\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_using_debug_spartan_iic.elf_on_local.tcl'
+13:37:43 INFO  : Disconnected from the channel tcfchan#2.
+13:37:44 INFO  : 'targets -set -filter {jtag_cable_name =~ "Platform Cable USB 000018627ad001" && level==0} -index 0' command is executed.
+13:37:44 INFO  : 'fpga -state' command is executed.
+13:37:44 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+13:37:44 INFO  : Jtag cable 'Platform Cable USB 000018627ad001' is selected.
+13:37:44 INFO  : 'jtag frequency' command is executed.
+13:37:44 INFO  : 'configparams mdm-detect-bscan-mask 2' command is executed.
+13:37:44 INFO  : Context for processor 'microblaze_0' is selected.
+13:37:44 INFO  : Processor reset is completed for 'microblaze_0'.
+13:37:44 INFO  : Context for processor 'microblaze_0' is selected.
+13:37:44 INFO  : The application 'C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/spartan_iic/Debug/spartan_iic.elf' is downloaded to processor 'microblaze_0'.
+13:37:44 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+configparams mdm-detect-bscan-mask 2
+targets -set -nocase -filter {name =~ "microblaze*#0" && bscan=="USER2"  && jtag_cable_name =~ "Platform Cable USB 000018627ad001"} -index 0
+rst -processor
+targets -set -nocase -filter {name =~ "microblaze*#0" && bscan=="USER2"  && jtag_cable_name =~ "Platform Cable USB 000018627ad001"} -index 0
+dow C:/Users/dell/Desktop/spartan_uart/spartan_uart.sdk/spartan_iic/Debug/spartan_iic.elf
+----------------End of Script----------------
+
+13:37:44 INFO  : Memory regions updated for context MicroBlaze #0
+13:37:44 INFO  : Memory regions updated for context MicroBlaze #0
+13:37:44 INFO  : Context for processor 'microblaze_0' is selected.
+13:37:44 INFO  : 'con' command is executed.
+13:37:44 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "microblaze*#0" && bscan=="USER2"  && jtag_cable_name =~ "Platform Cable USB 000018627ad001"} -index 0
+con
+----------------End of Script----------------
+
+13:37:44 INFO  : Launch script is exported to file 'C:\Users\dell\Desktop\spartan_uart\spartan_uart.sdk\.sdk\launch_scripts\xilinx_c-c++_application_(system_debugger)\system_debugger_using_debug_spartan_iic.elf_on_local.tcl'
+13:41:17 INFO  : Disconnected from the channel tcfchan#3.

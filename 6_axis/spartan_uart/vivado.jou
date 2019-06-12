@@ -1,0 +1,17 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Tue Jun  4 13:53:39 2019
+# Process ID: 15052
+# Current directory: C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent8664 C:\Users\dell\Desktop\xilinx\test\IO_LED_sw\spartan_uart\spartan_uart.xpr
+# Log file: C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart/vivado.log
+# Journal file: C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/dell/Desktop/xilinx/test/IO_LED_sw/spartan_uart/spartan_uart.xpr
+open_hw
+update_compile_order -fileset sources_1
+connect_hw_server
+open_hw_target
