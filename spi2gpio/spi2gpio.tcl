@@ -12,15 +12,15 @@ puts "The project dir is ${prj_dir}!"
 
 # Create Project
 # open_project $project_name
-create_project $project_name $prj_dir -part $device_model
+create_project -force $project_name $prj_dir -part $device_model
 
 set_property simulator_language Verilog [current_project]
 
 # Resource Files
 add_files -norecurse ${prj_dir}/src/spi2gpio.v
 add_files -norecurse ${prj_dir}/src/freq_div.v
-add_files -norecurse ${prj_dir}/src/led_segment.v
-add_files -norecurse ${prj_dir}/src/milisec_clk.v
+# add_files -norecurse ${prj_dir}/src/led_segment.v
+# add_files -norecurse ${prj_dir}/src/milisec_clk.v
 add_files -norecurse ${prj_dir}/src/freq_divider.vhd
 add_files -norecurse ${prj_dir}/src/shifter.vhd
 add_files -norecurse ${prj_dir}/src/uart_cell.vhd
@@ -47,3 +47,6 @@ wait_on_run impl_1
 # BITSTREAM
 launch_runs impl_1 -to_step write_bitstream
 wait_on_run impl_1
+
+# EXIT
+quit 0
