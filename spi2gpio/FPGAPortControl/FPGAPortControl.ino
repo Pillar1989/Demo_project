@@ -1,0 +1,407 @@
+/*
+  FPGA Port Control
+
+  This example controls an FPGA xc7s15ftgb196-1 logic port.
+
+==============================================================================================
+      FUNCTION  LOGIC            FPGA PIN          NET/ARDUINO                reserved
+==============================================================================================
+        SPI                       H2                AR_D13   /SCK            gport_d[5]
+                                  H1                AR_D12   /MISO           gport_d[4]
+                                  B1                AR_D11   /MOSI           gport_d[3]
+                spi_fss           B2                AR_D10   /SS             gport_d[2]
+                rst_n             A2                AR_D9                    gport_d[1]
+
+                gport_d[0]        B3                AR_D8
+                gport_c[7]        A3                AR_D7
+                gport_c[6]        A4                AR_D6
+                gport_c[5]        B5                AR_D5
+                gport_c[4]        A5                AR_D4
+                gport_c[3]        B6                AR_D3
+                gport_c[2]        A10               AR_D2
+                                                    AR_D1    /TX
+                                                    AR_D0    /RX
+
+        IO      gport_a[0]        N14               FPGA_IO0
+                gport_a[1]        M14               FPGA_IO1
+                gport_a[2]        C4                FPGA_IO2
+                gport_a[3]        B13               FPGA_IO3
+                gport_a[4]        N10               FPGA_IO4
+                gport_a[5]        M10               FPGA_IO5
+                gport_a[6]        B14               FPGA_IO6
+                gport_a[7]        D3                FPGA_IO7
+                gport_b[0]        P5                FPGA_IO8
+                gport_b[1]        M3                FPGA_IO9
+                gport_b[2]        C3                FPGA_IO10
+                gport_b[3]        M4                FPGA_IO11
+                gport_b[4]        C10               FPGA_IO12
+                gport_b[5]        D10               FPGA_IO13
+
+        LED     gport_b[6]        J1                FPGA_LED1
+                gport_b[7]        A13               FPGA_LED2
+
+        Button  gport_e[0]        M2                FPGA_K1
+                gport_e[1]        L2                FPGA_K2
+                gport_e[2]        L3                FPGA_K3
+                gport_e[3]        K3                FPGA_K4
+
+        VERSION gport_z[0]        P4                VERSION_1
+                gport_z[1]        P3                VERSION_2
+                gport_z[2]        C14               VERSION_3
+                gport_z[3]        D14               VERSION_4
+
+        TXS0108E gport_z[7]        N4               FPGA_AR_OE
+                                                    FPGA_ESP_SDA <- AR_SDA
+                                                    FPGA_ESP_SCL <- AR_SCL
+                gport_c[0]        A12               FPGA_AR_D0   <- AR_D0
+                gport_c[1]        C12               FPGA_AR_D1   <- AR_D1
+                                                    FPGA_AR_RESET<- AR_RESET
+                spi_clk           H13               FPGA_AR_SCK  <- AR_SCK
+                spi_in            M5                FPGA_AR_MOSI <- AR_MOSI
+                spi_out           L5                FPGA_AR_MISO <- AR_MISO
+
+        DG2788A gport_z[6]        H3                FPGA_ESP_IN12
+                gport_z[5]        E11               FPGA_ESP_IN34
+
+ The registers:
+  * 0x00  - GPA_OE    port A output enable, 1 for output, 0 for input
+  * 0x01  - GPA_ODATA port A output data
+  * 0x02  - GPA_IDATA port A input  data
+
+  * 0x04  - GPB_OE    port B output enable, 1 for output, 0 for input
+  * 0x05  - GPB_ODATA port B output data
+  * 0x06  - GPB_IDATA port B input  data
+
+  * 0x08  - GPC_OE    port C output enable, 1 for output, 0 for input
+  * 0x09  - GPC_ODATA port C output data
+  * 0x0A  - GPC_IDATA port C input  data
+  * 0x0B  - GPC_ALT   port C alternate function control,
+            bit 0x01  UART_TX alternate, 1 for UART_TX, 0 for GPORT_C[0]
+            bit 0x02  UART_RX alternate, 1 for UART_RX, 0 for GPORT_C[1]
+            bit 0xFC  reserved
+
+  * 0x0C  - GPD_OE    port D output enable, 1 for output, 0 for input
+  * 0x0D  - GPD_ODATA port D output data
+  * 0x0E  - GPD_IDATA port D input  data
+
+  * 0x10  - GPE_OE    port E output enable, 1 for output, 0 for input
+  * 0x11  - GPE_ODATA port E output data
+  * 0x12  - GPE_IDATA port E input  data
+
+  * 0x18  - UART data, receiving & transmit
+  * 0x19  - UART state,
+            bit 0x10 transmit busy
+            bit 0x01 data buffer with valid data
+
+  * 0x1C  - GPZ_OE    port Z output enable, 1 for output, 0 for input
+  * 0x1D  - GPZ_ODATA port Z output data
+  * 0x1E  - GPZ_IDATA port Z input  data
+
+ The circuit:
+  * RST - to digital pin  9 (Logic reset)
+  * CS  - to digital pin  10 (SS pin)
+  * SDI - to digital pin 11 (MOSI pin)
+  * SDO - to digital pin 12 (MISO pin)
+  * CLK - to digital pin 13 (SCK pin)
+
+ created 20 June 2019
+ by Peter Yang
+
+ Base on DigitalPotControl.ino by Tom Igoe
+*/
+
+// include the SPI library:
+#include <SPI.h>
+
+enum {
+  GPA_OE = 0x00,
+  GPA_ODATA,
+  GPA_IDATA,
+
+  GPB_OE = 0x04,
+  GPB_ODATA,
+  GPB_IDATA,
+
+  GPC_OE = 0x08,
+  GPC_ODATA,
+  GPC_IDATA,
+  #define GPC_ALT_UART_TX   0x01
+  #define GPC_ALT_UART_RX   0x02
+  #define GPC_ALT_UART_MASK (GPC_ALT_UART_TX | GPC_ALT_UART_RX)
+  GPC_ALT,
+
+  GPD_OE = 0x0C,
+  GPD_ODATA,
+  GPD_IDATA,
+
+  GPE_OE = 0x10,
+  GPE_ODATA,
+  GPE_IDATA,
+
+  UART_DATA = 0x18,
+  #define UART_STAT_TX_BUSY  0x10
+  #define UART_STAT_RX_DV    0x01
+  UART_STAT,
+
+  GPZ_OE = 0x1C,
+  GPZ_ODATA,
+  GPZ_IDATA,
+};
+
+const byte WRITE = 0b10000000;   // SPI2GPIO write
+
+// set pin 10 as the slave select for the digital pot:
+const int slaveSelectPin = 10;
+const int resetPin       =  9;
+
+unsigned regRead(int address) {
+  unsigned v;
+
+  // take the SS pin low to select the chip:
+  digitalWrite(slaveSelectPin, LOW);
+  //  send in the address and value via SPI:
+  SPI.transfer(address | 0x0);
+  v = SPI.transfer(0x0);
+  // take the SS pin high to de-select the chip:
+  digitalWrite(slaveSelectPin, HIGH);
+  return v;
+}
+
+unsigned regWrite(int address, int value) {
+  unsigned v;
+  // take the SS pin low to select the chip:
+  digitalWrite(slaveSelectPin, LOW);
+  //  send in the address and value via SPI:
+  SPI.transfer(address | WRITE);
+  v = SPI.transfer(value);
+  // take the SS pin high to de-select the chip:
+  digitalWrite(slaveSelectPin, HIGH);
+  return v;
+}
+
+void setup() {
+  int v;
+
+  #if 1
+  Serial.begin(115200);
+  #else
+  pinMode(0, INPUT);
+  pinMode(1, INPUT);
+  #endif
+
+  // set the slaveSelectPin as an output:
+  pinMode(slaveSelectPin, OUTPUT);
+
+  // initialize SPI:
+  SPI.begin();
+  SPI.beginTransaction(SPISettings(100000, MSBFIRST, SPI_MODE3));
+
+
+  // set the reset Pin as an output
+  pinMode(resetPin,       OUTPUT);
+
+  // reset FPGA logic
+  digitalWrite(resetPin, LOW);
+  delay(1);
+  digitalWrite(resetPin, HIGH);
+
+  /* Prevent initial error, if reset pin not used */
+  // regRead(0x0);
+
+  /*
+   * D0/D2/D4...D12 output
+   * D1/D3/D5...D13 input
+   */
+  regWrite(GPA_OE, 0x55);
+  regWrite(GPB_OE, 0x55);
+
+  /* LED1/2 as output */
+  v = regRead(GPB_OE);
+  regWrite(GPB_OE, v | 0xC0);
+
+  #if 1
+  Serial.print("[0xW] = ");
+  if (v < 16)
+     Serial.print("0");
+  Serial.println(v, HEX);
+  #endif
+
+  /* Enable TXS0108E for UART */
+  regWrite(GPZ_OE,    0xE0);
+  /*
+   * FPGA_AR_OE    = High
+   * FPGA_ESP_IN12 = Low
+   * FPGA_ESP_IN34 = Low
+   */
+  regWrite(GPZ_ODATA, 0x80);
+
+  /* UART alternate pin */
+  regWrite(GPC_ALT, GPC_ALT_UART_MASK);
+
+  regWrite(GPC_OE, 0xFF);
+  regWrite(GPD_OE, 0x01);
+}
+
+void print_hex_pre0(unsigned v) {
+  if (v < 4096)
+    Serial.print("0");
+  if (v < 256)
+    Serial.print("0");
+  if (v < 16)
+    Serial.print("0");
+  Serial.print(v, HEX);
+}
+
+void fpga_scan_io(void) {
+  unsigned v;
+
+  for (int i = 0; i < 7; i++) {
+    unsigned a, b;
+
+    v = 0x1 << (i << 1);
+
+    a = v >> 0;
+    b = (v >> 8) & 0xFF;
+    regWrite(GPA_ODATA, a);
+    regWrite(GPB_ODATA, b);
+
+    Serial.print("W 0x");
+    print_hex_pre0(v);
+
+    delay(500);
+
+    a = regRead(GPA_IDATA);
+    b = regRead(GPB_IDATA);
+    v = a | (b << 8);
+    Serial.print(" R 0x");
+    print_hex_pre0(v);
+    Serial.println("");
+  }
+}
+
+void spi_dump_regs(void) {
+  unsigned v;
+
+  Serial.println("\r\nREGS:");
+  for (int address = 0; address < 0x20; address++) {
+    v = regRead(address);
+    Serial.print("[0x");
+    if (address < 16)
+      Serial.print("0");
+    Serial.print(address, HEX);
+    Serial.print("] = 0x");
+    if (v < 16)
+      Serial.print("0");
+    Serial.println(v, HEX);
+  }
+}
+
+unsigned leds = 0x80;
+void led_reverse(void) {
+  unsigned v;
+
+  /*
+  if (digitalRead(0)) {
+    leds |=  0xC0;
+  } else {
+    leds &= ~0xC0;
+  }
+  */
+  v = regRead(GPB_ODATA);
+  regWrite(GPB_ODATA, (v & 0x3F) | (leds & 0xC0));
+  leds = ~leds;
+
+  v = regRead(GPC_ODATA);
+  regWrite(GPC_ODATA, ~v);
+
+  v = regRead(GPD_ODATA);
+  regWrite(GPD_ODATA, ~v);
+}
+
+int uart_loop(void) {
+  unsigned r, v, stat;
+  int i;
+
+  // eliminate the buffer effect.
+  Serial.flush();
+
+  // FPGA UART RX
+  for (r = 0x30; r < 0x3A; r++) {
+    v = regRead(UART_STAT);
+    if (v & UART_STAT_RX_DV)
+      v = regRead(UART_DATA);
+
+    stat = regRead(UART_STAT);
+
+    Serial.print((const char)r);
+    delay(1);
+
+    for (i = 10000; i >= 0; i--) {
+      if (regRead(UART_STAT) & UART_STAT_RX_DV) {
+        break;
+      }
+    }
+    if (i < 0) {
+      return -1;
+    }
+
+    v = regRead(UART_DATA);
+    if (r != v) {
+      Serial.print("UART RX=");
+      Serial.print(v, HEX);
+      Serial.print(" AR_TX=");
+      Serial.println(r, HEX);
+      return -2;
+    }
+  }
+
+  Serial.print(" UART_STAT=0x");
+  if (stat < 16)
+    Serial.print("0");
+  Serial.print(stat, HEX);
+
+  Serial.println();
+
+
+  // FPGA UART TX
+  for (r = 0x40; r < 0x4A; r++) {
+    regWrite(UART_DATA, r);
+
+    // wait tx free
+    for (i = 10000; i >= 0; i--) {
+      if ((regRead(UART_STAT) & UART_STAT_TX_BUSY) == 0) {
+        break;
+      }
+    }
+    if (i < 0) {
+      return -3;
+    }
+
+    v = Serial.read();
+    if (r != v) {
+      Serial.print("UART TX=");
+      Serial.print(r, HEX);
+      Serial.print(" AR_RX=");
+      Serial.println(v, HEX);
+      return -4;
+    }
+  }
+
+  return 0;
+}
+
+void loop() {
+  int r;
+
+  spi_dump_regs();
+
+  r = uart_loop();
+  if (r < 0) {
+    Serial.print("UART FAIL ");
+    Serial.print(r);
+    Serial.println();
+  }
+
+  led_reverse();
+  delay(1500);
+}
