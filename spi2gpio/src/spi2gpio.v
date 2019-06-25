@@ -235,6 +235,8 @@ module spi2gpio (
 		if (!rst_n) begin
 			gpa_oe = 8'hff;
 			gpa_odata = 0;
+			led_nr_0 = 0;
+			led_nr_1 = 0;
 		end else if (cycle_wr && spi_st == spi_st_data && spi_wr) begin
 			case (wr_addr)
 			3'd0: gpa_oe = spi_wdata;
