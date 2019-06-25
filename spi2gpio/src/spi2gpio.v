@@ -16,21 +16,29 @@ module spi2gpio (
 	input spi_in,
 	output spi_out,
 
-	// gpio group a
+	// gpio group A
 	inout [7:0] gport_a,
 
-	// gpio group b
+	// gpio group B
 	inout [7:0] gport_b,
+
+	// gpio group C
+	inout [7:0] gport_c,
+
+	// gpio group D
+	inout [0:0] gport_dx,
+
+	// gpio group E
+	inout [3:0] gport_ex,
+
+	// gpio group Z
+	inout [6:0] gport_zx
 
 	`ifdef __LED_SEG
 	// led segments
 	output [7:0] led,
 	output [1:0] led_sel_n,
 	`endif
-
-	// uart
-	output o_uart_tx,
-	input i_uart_rx
 );
 	/* global clock */
 	reg clk;
@@ -49,8 +57,15 @@ module spi2gpio (
 	reg spi_clk_r;
 	reg spi_fss_r;
 
-	reg [7:0] spi_snd;
+	reg  [7:0] spi_snd;
 	wire [7:0] spi_rcv;
+
+	wire [7:0] gport_d;
+	wire [7:0] gport_e;
+	wire [7:0] gport_z;
+	assign gport_d = {7'bzzzzzzz, gport_dx[0] };
+	assign gport_e = {4'bzzzz,    gport_ex[3:0]};
+	assign gport_z = {gport_zx[6:4], 1'bz, gport_zx[3:0]};
 
 /* ===========================================================================*/
 /* SPI clock sync to high frequency clock */
@@ -233,8 +248,8 @@ module spi2gpio (
 /* ===========================================================================*/
 /* GPIO A */
 /* ===========================================================================*/
-	reg [7:0] gpa_oe;
-	reg [7:0] gpa_odata;
+	reg  [7:0] gpa_oe;
+	reg  [7:0] gpa_odata;
 	wire [7:0] gpa_idata;
 
 	assign gpa_idata = gport_a;
@@ -251,8 +266,8 @@ module spi2gpio (
 /* ===========================================================================*/
 /* GPIO B */
 /* ===========================================================================*/
-	reg [7:0] gpb_oe;
-	reg [7:0] gpb_odata;
+	reg  [7:0] gpb_oe;
+	reg  [7:0] gpb_odata;
 	wire [7:0] gpb_idata;
 
 	assign gpb_idata = gport_b;
@@ -266,6 +281,83 @@ module spi2gpio (
 	assign gport_b[6] = gpb_oe[6]? gpb_odata[6]: 1'bz;
 	assign gport_b[7] = gpb_oe[7]? gpb_odata[7]: 1'bz;
 
+/* ===========================================================================*/
+/* GPIO C */
+/* ===========================================================================*/
+	reg  [7:0] gpc_alt;
+	reg  [7:0] gpc_oe;
+	reg  [7:0] gpc_odata;
+	wire [7:0] gpc_idata;
+
+	// uart
+	wire o_uart_tx;
+	wire i_uart_rx = gport_c[1];
+
+	assign gpc_idata = gport_c;
+
+	assign gport_c[0] = gpc_alt[0]? o_uart_tx:
+	                                   (gpc_oe[0]? gpc_odata[0]: 1'bz);
+	assign gport_c[1] = (~gpc_alt[1] & gpc_oe[1])? gpc_odata[1]: 1'bz;
+	assign gport_c[2] = gpc_oe[2]? gpc_odata[2]: 1'bz;
+	assign gport_c[3] = gpc_oe[3]? gpc_odata[3]: 1'bz;
+	assign gport_c[4] = gpc_oe[4]? gpc_odata[4]: 1'bz;
+	assign gport_c[5] = gpc_oe[5]? gpc_odata[5]: 1'bz;
+	assign gport_c[6] = gpc_oe[6]? gpc_odata[6]: 1'bz;
+	assign gport_c[7] = gpc_oe[7]? gpc_odata[7]: 1'bz;
+
+/* ===========================================================================*/
+/* GPIO D */
+/* ===========================================================================*/
+	reg  [7:0] gpd_oe;
+	reg  [7:0] gpd_odata;
+	wire [7:0] gpd_idata;
+
+	assign gpd_idata = gport_d;
+
+	assign gport_d[0] = gpd_oe[0]? gpd_odata[0]: 1'bz;
+	assign gport_d[1] = gpd_oe[1]? gpd_odata[1]: 1'bz;
+	assign gport_d[2] = gpd_oe[2]? gpd_odata[2]: 1'bz;
+	assign gport_d[3] = gpd_oe[3]? gpd_odata[3]: 1'bz;
+	assign gport_d[4] = gpd_oe[4]? gpd_odata[4]: 1'bz;
+	assign gport_d[5] = gpd_oe[5]? gpd_odata[5]: 1'bz;
+	assign gport_d[6] = gpd_oe[6]? gpd_odata[6]: 1'bz;
+	assign gport_d[7] = gpd_oe[7]? gpd_odata[7]: 1'bz;
+
+/* ===========================================================================*/
+/* GPIO E */
+/* ===========================================================================*/
+	reg  [7:0] gpe_oe;
+	reg  [7:0] gpe_odata;
+	wire [7:0] gpe_idata;
+
+	assign gpe_idata = gport_e;
+
+	assign gport_e[0] = gpe_oe[0]? gpe_odata[0]: 1'bz;
+	assign gport_e[1] = gpe_oe[1]? gpe_odata[1]: 1'bz;
+	assign gport_e[2] = gpe_oe[2]? gpe_odata[2]: 1'bz;
+	assign gport_e[3] = gpe_oe[3]? gpe_odata[3]: 1'bz;
+	assign gport_e[4] = gpe_oe[4]? gpe_odata[4]: 1'bz;
+	assign gport_e[5] = gpe_oe[5]? gpe_odata[5]: 1'bz;
+	assign gport_e[6] = gpe_oe[6]? gpe_odata[6]: 1'bz;
+	assign gport_e[7] = gpe_oe[7]? gpe_odata[7]: 1'bz;
+
+/* ===========================================================================*/
+/* GPIO Z */
+/* ===========================================================================*/
+	reg  [7:0] gpz_oe;
+	reg  [7:0] gpz_odata;
+	wire [7:0] gpz_idata;
+
+	assign gpz_idata = gport_z;
+
+	assign gport_z[0] = gpz_oe[0]? gpz_odata[0]: 1'bz;
+	assign gport_z[1] = gpz_oe[1]? gpz_odata[1]: 1'bz;
+	assign gport_z[2] = gpz_oe[2]? gpz_odata[2]: 1'bz;
+	assign gport_z[3] = gpz_oe[3]? gpz_odata[3]: 1'bz;
+	assign gport_z[4] = gpz_oe[4]? gpz_odata[4]: 1'bz;
+	assign gport_z[5] = gpz_oe[5]? gpz_odata[5]: 1'bz;
+	assign gport_z[6] = gpz_oe[6]? gpz_odata[6]: 1'bz;
+	assign gport_z[7] = gpz_oe[7]? gpz_odata[7]: 1'bz;
 
 /* ===========================================================================*/
 /* 2 Digit Seven-segment Display */
@@ -329,7 +421,7 @@ module spi2gpio (
 			spi_wr = 0;
 			wr_addr = 0;
 		end else if (cycle_sample && spi_st == spi_st_addr) begin
-			spi_wr = spi_rcv[7];
+			spi_wr  = spi_rcv[7];
 			wr_addr = spi_rcv[`REG_ADDR_SZ - 1:0];
 		end
 	end
@@ -342,6 +434,19 @@ module spi2gpio (
 
 			gpb_oe = 8'h00;
 			gpb_odata = 0;
+
+			gpc_oe = 8'h00;
+			gpc_odata = 0;
+			gpc_alt = 8'h00;
+
+			gpd_oe = 8'h00;
+			gpd_odata = 0;
+
+			gpe_oe = 8'h00;
+			gpe_odata = 0;
+
+			gpz_oe    = 8'h80;
+			gpz_odata = 8'h80;
 
 			`ifdef __LED_SEG
 			led_nr_0 = 0;
@@ -356,10 +461,23 @@ module spi2gpio (
 			'h04: gpb_oe    = spi_wdata;
 			'h05: gpb_odata = spi_wdata;
 
+			'h08: gpc_oe    = spi_wdata;
+			'h09: gpc_odata = spi_wdata;
+			'h0B: gpc_alt   = spi_wdata;
+
+			'h0C: gpd_oe    = spi_wdata;
+			'h0D: gpd_odata = spi_wdata;
+
+			'h10: gpe_oe    = spi_wdata;
+			'h11: gpe_odata = spi_wdata;
+
 			`ifdef __LED_SEG
 			'h1C: led_nr_0  = spi_wdata;
 			'h1D: led_nr_1  = spi_wdata;
 			`endif
+
+			'h1C: gpz_oe    = spi_wdata;
+			'h1D: gpz_odata = spi_wdata;
 
 			default: ;
 			endcase
@@ -390,6 +508,19 @@ module spi2gpio (
 			'h05: spi_snd = gpb_odata;
 			'h06: spi_snd = gpb_idata;
 
+			'h08: spi_snd = gpc_oe;
+			'h09: spi_snd = gpc_odata;
+			'h0A: spi_snd = gpc_idata;
+			'h0B: spi_snd = gpc_alt;
+
+			'h0C: spi_snd = gpd_oe;
+			'h0D: spi_snd = gpd_odata;
+			'h0E: spi_snd = gpd_idata;
+
+			'h10: spi_snd = gpe_oe;
+			'h11: spi_snd = gpe_odata;
+			'h12: spi_snd = gpe_idata;
+
 			`ifdef __LED_SEG
 			'h1C: spi_snd = led_nr_0;
 			'h1D: spi_snd = led_nr_1;
@@ -397,9 +528,17 @@ module spi2gpio (
 
 			`UART_DATA_ADDR: spi_snd = uart_rcv;
 			'h19: spi_snd = {3'h0, uart_tfr_busy, 3'h0, uart_ri};
-			default: spi_snd = /*8'h0;*/
-				/* {spi_rd, 4'h0, rd_addr}; */
-				{spi_wr, 4'h0, wr_addr};
+
+			'h1C: spi_snd = gpz_oe;
+			'h1D: spi_snd = gpz_odata;
+			'h1E: spi_snd = gpz_idata;
+
+			default: spi_snd = 8'h0;
+				/*
+				 * debuging only
+				 * {spi_rd, 4'h0, rd_addr};
+				 * {spi_wr, 4'h0, wr_addr};
+				 */
 			endcase
 		end
 	end
