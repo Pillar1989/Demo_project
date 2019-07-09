@@ -11,7 +11,8 @@ Generate bitstream
   then run build.cmd.
 
 <br><br>
-Connections between FPGA and Arduino
+FPGA Connections
+----------------
 <pre>
 ==============================================================================================
       FUNCTION  LOGIC            FPGA PIN          NET/ARDUINO                reserved
@@ -41,11 +42,7 @@ Connections between FPGA and Arduino
                 gport_a[6]        B14               FPGA_IO6
                 gport_a[7]        D3                FPGA_IO7
                 gport_b[0]        P5                FPGA_IO8
-                gport_b[1]        M3                FPGA_IO9
-                gport_b[2]        C3                FPGA_IO10
-                gport_b[3]        M4                FPGA_IO11
-                gport_b[4]        C10               FPGA_IO12
-                gport_b[5]        D10               FPGA_IO13
+                gport_b[1]        E11               FPGA_IO9
 
         LED     gport_b[6]        J1                FPGA_LED1
                 gport_b[7]        A13               FPGA_LED2
@@ -54,24 +51,29 @@ Connections between FPGA and Arduino
                 gport_e[1]        L2                FPGA_K2
                 gport_e[2]        L3                FPGA_K3
                 gport_e[3]        K3                FPGA_K4
+                gport_e[4]        C3                FPGA_USER1
+                gport_e[5]        M4                FPGA_USER2
+                gport_e[6]        D14               FPGA_RST
 
         VERSION gport_z[0]        P4                VERSION_1
                 gport_z[1]        P3                VERSION_2
                 gport_z[2]        C14               VERSION_3
-                gport_z[3]        D14               VERSION_4
 
-        TXS0108E gport_z[7]        N4               FPGA_AR_OE
-                                                    FPGA_ESP_SDA <- AR_SDA
-                                                    FPGA_ESP_SCL <- AR_SCL
+        TXS0104E-0
+                gport_z[6]        N4                FPGA_AR_OE1
+                gport_d[6]        P13               FPGA_ESP_SDA <- AR_SDA
+                gport_d[7]        P12               FPGA_ESP_SCL <- AR_SCL
                 gport_c[0]        A12               FPGA_AR_D0   <- AR_D0
                 gport_c[1]        C12               FPGA_AR_D1   <- AR_D1
-                                                    FPGA_AR_RESET<- AR_RESET
+
+        TXS0104E-1
+                gport_z[7]        M3                FPGA_AR_OE2
+                gport_z[4]        K4                FPGA_AR_RESET<- AR_RESET
                 spi_clk           H13               FPGA_AR_SCK  <- AR_SCK
                 spi_in            M5                FPGA_AR_MOSI <- AR_MOSI
                 spi_out           L5                FPGA_AR_MISO <- AR_MISO
 
-        DG2788A gport_z[6]        H3                FPGA_ESP_IN12
-                gport_z[5]        E11               FPGA_ESP_IN34
+        DG2788A gport_z[5]        H3                FPGA_ESP_IN12
 </pre>
 
 <br><br>
@@ -115,4 +117,4 @@ SPI Registers
 <br><br>
 Arduino Code
 ------------
-see FPGAPortControl\FPGAPortControl.ino
+see [FPGAPortControl\FPGAPortControl.ino](FPGAPortControl/FPGAPortControl.ino)
