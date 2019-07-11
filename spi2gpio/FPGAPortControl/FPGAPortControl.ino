@@ -114,6 +114,7 @@
 
 // include the SPI library:
 #include <SPI.h>
+#include <Wire.h>
 
 enum {
   GPA_OE = 0x00,
@@ -230,13 +231,13 @@ void setup() {
 
   /*
    * Enable TXS0104E-1 for SPI
-   * Enable TXS0104E-0 for UART
+   * Enable TXS0104E-0 for UART & I2C
    */
   regWrite(GPZ_OE,    0xE0);
   /*
    * FPGA_AR_OE2    = High
    * FPGA_AR_OE1    = High
-   * FPGA_ESP_IN12  = Low
+   * FPGA_ESP_IN12  = Low, Enable ESP32 I2C
    */
   regWrite(GPZ_ODATA, 0xC0);
 
@@ -246,6 +247,8 @@ void setup() {
   regWrite(GPC_OE, 0xFF);
   regWrite(GPD_OE, 0x01);
   regWrite(GPE_OE, 0x00);
+
+  Wire.begin();
 }
 
 void print_hex_pre0(unsigned v) {
@@ -324,16 +327,50 @@ void led_reverse(void) {
   regWrite(GPD_ODATA, ~v);
 }
 
-void button_status(void) {
+int button_chk(void) {
   unsigned v;
 
   v = regRead(GPE_IDATA);
-  Serial.print("BTN: 0x");
+  if ((v & 0x7F) != 0x70)
+    return -1;
+
+  Serial.print("Press USER1 ");
+  for (;;)  if (0 == (regRead(GPE_IDATA) & 0x10)) break;
+  Serial.println("OK");
+
+  Serial.print("Press USER2 ");
+  for (;;)  if (0 == (regRead(GPE_IDATA) & 0x20)) break;
+  Serial.println("OK");
+
+  Serial.print("Press FPGA_RST ");
+  for (;;)  if (0 == (regRead(GPE_IDATA) & 0x40)) break;
+  Serial.println("OK");
+
+  Serial.print("Switch on K1 ");
+  for (;;)  if (0 != (regRead(GPE_IDATA) & 0x01)) break;
+  Serial.println("OK");
+
+  Serial.print("Switch on K2 ");
+  for (;;)  if (0 != (regRead(GPE_IDATA) & 0x02)) break;
+  Serial.println("OK");
+
+  Serial.print("Switch on K3 ");
+  for (;;)  if (0 != (regRead(GPE_IDATA) & 0x04)) break;
+  Serial.println("OK");
+
+  Serial.print("Switch on K4 ");
+  for (;;)  if (0 != (regRead(GPE_IDATA) & 0x08)) break;
+  Serial.println("OK");
+
+  #if 0
+  Serial.print("0x");
   print_hex_pre0(v);
   Serial.println();
+  #endif
+  return 0;
 }
 
-int uart_loop(void) {
+int uart_chk(void) {
   unsigned r, v, stat;
   int i;
 
@@ -370,12 +407,14 @@ int uart_loop(void) {
     }
   }
 
+  #if 0
   Serial.print(" UART_STAT=0x");
   if (stat < 16)
     Serial.print("0");
   Serial.print(stat, HEX);
 
   Serial.println();
+  #endif
 
 
   // FPGA UART TX
@@ -405,20 +444,94 @@ int uart_loop(void) {
   return 0;
 }
 
+int i2c_scan(void) {
+  byte error, address;
+  int nDevices;
+  byte dev_0x20 = 0;
+  byte dev_0x6B = 0;
+
+  nDevices = 0;
+  for(address = 1; address < 127; address++ )
+  {
+    // The i2c_scanner uses the return value of
+    // the Write.endTransmisstion to see if
+    // a device did acknowledge to the address.
+    Wire.beginTransmission(address);
+    error = Wire.endTransmission();
+
+    if (error == 0)
+    {
+      Serial.print("0x");
+      if (address<16)
+        Serial.print("0");
+      Serial.print(address,HEX);
+      Serial.print(" ");
+
+      nDevices++;
+      if (address == 0x20) {
+        dev_0x20 = 1;
+      }
+      if (address == 0x6B) {
+        dev_0x6B = 1;
+      }
+    }
+    else if (error==4)
+    {
+      Serial.print("Unknow error at address 0x");
+      if (address<16)
+        Serial.print("0");
+      Serial.println(address,HEX);
+    }
+  }
+  if (nDevices == 0) {
+    Serial.println("No I2C devices found\n");
+    return -1;
+  }
+  if (dev_0x20 && dev_0x6B) {
+    return 0;
+  }
+  return -1;
+}
+
+static int button_checked = 0;
 void loop() {
   int r;
 
   // spi_dump_regs();
 
-  r = uart_loop();
+  Serial.print("UART: ");
+  r = uart_chk();
   if (r < 0) {
-    Serial.print("UART FAIL ");
+    Serial.print(" FAIL ");
     Serial.println(r);
   } else {
-    Serial.println("UART OK");
+    Serial.println(" OK");
   }
 
   led_reverse();
-  button_status();
+
+  if (button_checked == 0) {
+    Serial.print("BTN : ");
+    r = button_chk();
+    if (r < 0) {
+      Serial.print("FAIL ");
+      Serial.println(r);
+    } else {
+      Serial.println("OK");
+    }
+
+    button_checked = 1;
+  }
+
+  Serial.print("I2C : ");
+  r = i2c_scan();
+  if (r < 0) {
+    Serial.print("FAIL ");
+    Serial.println(r);
+  } else {
+    Serial.println("OK");
+  }
+  Serial.println();
+
   delay(1500);
 }
