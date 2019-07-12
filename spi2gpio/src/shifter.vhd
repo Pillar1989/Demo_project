@@ -15,7 +15,7 @@ port(
 	i_si,
 	i_load_n: in std_logic;
 	i_load: in std_logic_vector(SIZE - 1 downto 0);
-	o_do: out std_logic_vector
+	o_do: out std_logic_vector (SIZE - 1 downto 0)
 );
 end entity shifter;
 

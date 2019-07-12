@@ -32,13 +32,16 @@ module spi2gpio (
 	inout [6:0] gport_ex,
 
 	// gpio group Z
-	inout [6:0] gport_zx
+	inout [6:0] gport_zx,
 
 	`ifdef __LED_SEG
 	// led segments
 	output [7:0] led,
 	output [1:0] led_sel_n,
 	`endif
+
+	// sk6805
+	output sk6805_do
 );
 	/* global clock */
 	reg clk;
@@ -404,6 +407,25 @@ module spi2gpio (
 	);
 
 /* ===========================================================================*/
+/* SK6805 Color LEDS */
+/* ===========================================================================*/
+	`define SK6805_CTRL_ADDR	'h14
+	`define SK6805_DATA_ADDR	'h15
+	wire [7:0] sk6805_data;
+	reg  [7:0] sk6805_ctrl;
+	wire sk6805_wr_n = !(cycle_wr && spi_st == spi_st_data && spi_wr && wr_addr == `SK6805_DATA_ADDR);
+
+	sk6805 sk_leds(
+		.i_clk(clk),
+		.i_rst_n(rst_n),
+		.i_wr_n(sk6805_wr_n),
+		.i_addr(sk6805_ctrl[2:0]),
+		.i_data(spi_wdata),
+		.o_data(sk6805_data),
+		.o_sk(sk6805_do)
+	);
+
+/* ===========================================================================*/
 /* SPI REGISTER WRITE */
 /* ===========================================================================*/
 	/*
@@ -455,6 +477,8 @@ module spi2gpio (
 			led_nr_1 = 0;
 			`endif
 
+			sk6805_ctrl = 8'h00;
+
 		end else if (cycle_wr && spi_st == spi_st_data && spi_wr) begin
 			case (wr_addr)
 			'h00: gpa_oe    = spi_wdata;
@@ -480,6 +504,8 @@ module spi2gpio (
 
 			'h1C: gpz_oe    = spi_wdata;
 			'h1D: gpz_odata = spi_wdata;
+
+			`SK6805_CTRL_ADDR: sk6805_ctrl = spi_wdata;
 
 			default: ;
 			endcase
@@ -522,6 +548,9 @@ module spi2gpio (
 			'h10: spi_snd = gpe_oe;
 			'h11: spi_snd = gpe_odata;
 			'h12: spi_snd = gpe_idata;
+
+			`SK6805_CTRL_ADDR: spi_snd = sk6805_ctrl;
+			`SK6805_DATA_ADDR: spi_snd = sk6805_data;
 
 			`ifdef __LED_SEG
 			'h1C: spi_snd = led_nr_0;

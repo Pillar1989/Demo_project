@@ -15,12 +15,14 @@ puts "The project dir is ${prj_dir}!"
 create_project -force $project_name $prj_dir -part $device_model
 
 set_property simulator_language Verilog [current_project]
+set_property source_mgmt_mode None [current_project]
 
 # Resource Files
 add_files -norecurse ${prj_dir}/src/spi2gpio.v
 add_files -norecurse ${prj_dir}/src/freq_div.v
 # add_files -norecurse ${prj_dir}/src/led_segment.v
-# add_files -norecurse ${prj_dir}/src/milisec_clk.v
+add_files -norecurse ${prj_dir}/src/milisec_clk.v
+add_files -norecurse ${prj_dir}/src/sk6805.v
 add_files -norecurse ${prj_dir}/src/freq_divider.vhd
 add_files -norecurse ${prj_dir}/src/shifter.vhd
 add_files -norecurse ${prj_dir}/src/uart_cell.vhd

@@ -3,6 +3,8 @@ set_property PACKAGE_PIN H4 [get_ports osc_clk]
 set_property IOSTANDARD LVCMOS33 [get_ports osc_clk]
 create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_ports osc_clk]
 
+set_property IOSTANDARD LVCMOS33 [get_ports sk6805_do]
+
 # UART export through GPORT_C[1:0]
 # set_property IOSTANDARD LVCMOS33 [get_ports i_uart_rx]
 # set_property IOSTANDARD LVCMOS33 [get_ports o_uart_tx]
@@ -127,3 +129,7 @@ set_property PACKAGE_PIN B2 [get_ports spi_fss]
 set_property PACKAGE_PIN H13 [get_ports spi_clk]
 set_property PACKAGE_PIN M5  [get_ports spi_in]
 set_property PACKAGE_PIN L5  [get_ports spi_out]
+
+# SK6805
+set_property PACKAGE_PIN N11  [get_ports sk6805_do]
+
