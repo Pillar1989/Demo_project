@@ -74,6 +74,8 @@ FPGA Connections
                 spi_out           L5                FPGA_AR_MISO <- AR_MISO
 
         DG2788A gport_z[5]        H3                FPGA_ESP_IN12
+
+        SK6805  sk6805_do         N11               FPGA_RGB
 </pre>
 
 <br><br>
@@ -103,6 +105,11 @@ SPI Registers
   * 0x10  - GPE_OE    port E output enable, 1 for output, 0 for input
   * 0x11  - GPE_ODATA port E output data
   * 0x12  - GPE_IDATA port E input  data
+
+  * 0x14  - SK6805_CTRL sk6805 control
+            bit 0x07  color address 0 - 5 (B0, R0, G0, B1, R1, G1)
+            bit 0xF8  reserved
+  * 0x15  - SK6805_DATA color data
 
   * 0x18  - UART data, receiving & transmit
   * 0x19  - UART state,

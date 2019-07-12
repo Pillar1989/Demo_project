@@ -64,6 +64,8 @@
 
         DG2788A gport_z[5]        H3                FPGA_ESP_IN12
 
+        SK6805  sk6805_do         N11               FPGA_RGB
+
 
  The registers:
   * 0x00  - GPA_OE    port A output enable, 1 for output, 0 for input
@@ -89,6 +91,11 @@
   * 0x10  - GPE_OE    port E output enable, 1 for output, 0 for input
   * 0x11  - GPE_ODATA port E output data
   * 0x12  - GPE_IDATA port E input  data
+
+  * 0x14  - SK6805_CTRL sk6805 control
+            bit 0x07  color address 0 - 5 (B0, R0, G0, B1, R1, G1)
+            bit 0xF8  reserved
+  * 0x15  - SK6805_DATA color data
 
   * 0x18  - UART data, receiving & transmit
   * 0x19  - UART state,
@@ -141,6 +148,9 @@ enum {
   GPE_ODATA,
   GPE_IDATA,
 
+  SK6805_CTRL = 0x14,
+  SK6805_DATA,
+
   UART_DATA = 0x18,
   #define UART_STAT_TX_BUSY  0x10
   #define UART_STAT_RX_DV    0x01
@@ -180,6 +190,16 @@ unsigned regWrite(int address, int value) {
   // take the SS pin high to de-select the chip:
   digitalWrite(slaveSelectPin, HIGH);
   return v;
+}
+
+void pr_hex0(unsigned v) {
+  if (v < 4096)
+    Serial.print("0");
+  if (v < 256)
+    Serial.print("0");
+  if (v < 16)
+    Serial.print("0");
+  Serial.print(v, HEX);
 }
 
 void setup() {
@@ -222,11 +242,27 @@ void setup() {
   v = regRead(GPB_OE);
   regWrite(GPB_OE, v | 0xC0);
 
+
+  /*
+   * SK6805 RGB1
+   * B R G = 0x123456
+   */
+  regWrite(SK6805_CTRL, 0);
+  regWrite(SK6805_DATA, 0x12);
+  regWrite(SK6805_CTRL, 1);
+  regWrite(SK6805_DATA, 0x34);
+  regWrite(SK6805_CTRL, 2);
+  regWrite(SK6805_DATA, 0x56);
+
   #if 1
-  Serial.print("[0xW] = ");
-  if (v < 16)
-     Serial.print("0");
-  Serial.println(v, HEX);
+  for (int i = 0; i < 3; i++) {
+    regWrite(SK6805_CTRL, i);
+    v = regRead(SK6805_DATA);
+    Serial.print("COLOR[");
+    Serial.print(i);
+    Serial.print("] = 0x");
+    pr_hex0(v);Serial.println();
+  }
   #endif
 
   /*
@@ -251,16 +287,6 @@ void setup() {
   Wire.begin();
 }
 
-void print_hex_pre0(unsigned v) {
-  if (v < 4096)
-    Serial.print("0");
-  if (v < 256)
-    Serial.print("0");
-  if (v < 16)
-    Serial.print("0");
-  Serial.print(v, HEX);
-}
-
 void fpga_scan_io(void) {
   unsigned v;
 
@@ -275,7 +301,7 @@ void fpga_scan_io(void) {
     regWrite(GPB_ODATA, b);
 
     Serial.print("W 0x");
-    print_hex_pre0(v);
+    pr_hex0(v);
 
     delay(500);
 
@@ -283,7 +309,7 @@ void fpga_scan_io(void) {
     b = regRead(GPB_IDATA);
     v = a | (b << 8);
     Serial.print(" R 0x");
-    print_hex_pre0(v);
+    pr_hex0(v);
     Serial.println("");
   }
 }
@@ -364,7 +390,7 @@ int button_chk(void) {
 
   #if 0
   Serial.print("0x");
-  print_hex_pre0(v);
+  pr_hex0(v);
   Serial.println();
   #endif
   return 0;
@@ -493,6 +519,33 @@ int i2c_scan(void) {
   return -1;
 }
 
+int sk6805_blink(void) {
+  static unsigned long color = 0xFFUL;
+
+  regWrite(SK6805_CTRL, 0x0);
+  regWrite(SK6805_DATA, (color >>  3) & 0x1F);
+  regWrite(SK6805_CTRL, 0x1);
+  regWrite(SK6805_DATA, (color >> 11) & 0x1F);
+  regWrite(SK6805_CTRL, 0x2);
+  regWrite(SK6805_DATA, (color >> 19) & 0x1F);
+
+  regWrite(SK6805_CTRL, 0x3);
+  regWrite(SK6805_DATA, (color >> 19) & 0x1F);
+  regWrite(SK6805_CTRL, 0x4);
+  regWrite(SK6805_DATA, (color >>  3) & 0x1F);
+  regWrite(SK6805_CTRL, 0x5);
+  regWrite(SK6805_DATA, (color >> 11) & 0x1F);
+
+  switch (color) {
+  case 0x0000FFUL: color = 0x00FF00UL; break;
+  case 0x00FF00UL: color = 0xFF0000UL; break;
+  case 0xFF0000UL: color = 0x0000FFUL; break;
+  default:
+    color = 0xFFUL; break;
+  }
+  return 0;
+}
+
 static int button_checked = 0;
 void loop() {
   int r;
@@ -533,5 +586,6 @@ void loop() {
   }
   Serial.println();
 
+  sk6805_blink();
   delay(1500);
 }
