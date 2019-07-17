@@ -43,13 +43,14 @@ set_property IOSTANDARD LVCMOS33 [get_ports {gport_dx[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_dx[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_dx[2]}]
 
-set_property IOSTANDARD LVCMOS33 [get_ports {gport_ex[6]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {gport_ex[5]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {gport_ex[4]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {gport_ex[3]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {gport_ex[2]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {gport_ex[1]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {gport_ex[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gport_e[7]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gport_e[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gport_e[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gport_e[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gport_e[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gport_e[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gport_e[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gport_e[0]}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_zx[6]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_zx[5]}]
@@ -58,6 +59,17 @@ set_property IOSTANDARD LVCMOS33 [get_ports {gport_zx[3]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_zx[2]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_zx[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_zx[0]}]
+
+set_property IOSTANDARD LVCMOS33 [get_ports {o_adc_clk}]
+
+set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[7]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[0]}]
 
 # FPGA_IO0 - FPGA_IO7
 set_property PACKAGE_PIN N14 [get_ports {gport_a[0]}]
@@ -97,15 +109,30 @@ set_property PACKAGE_PIN P13 [get_ports {gport_dx[1]}]
 set_property PACKAGE_PIN P12 [get_ports {gport_dx[2]}]
 
 # K1 - K4
-set_property PACKAGE_PIN M2  [get_ports {gport_ex[0]}]
-set_property PACKAGE_PIN L2  [get_ports {gport_ex[1]}]
-set_property PACKAGE_PIN L3  [get_ports {gport_ex[2]}]
-set_property PACKAGE_PIN K3  [get_ports {gport_ex[3]}]
+set_property PACKAGE_PIN M2  [get_ports {gport_e[0]}]
+set_property PACKAGE_PIN L2  [get_ports {gport_e[1]}]
+set_property PACKAGE_PIN L3  [get_ports {gport_e[2]}]
+set_property PACKAGE_PIN K3  [get_ports {gport_e[3]}]
 # USER1/2
-set_property PACKAGE_PIN C3  [get_ports {gport_ex[4]}]
-set_property PACKAGE_PIN M4  [get_ports {gport_ex[5]}]
+set_property PACKAGE_PIN C3  [get_ports {gport_e[4]}]
+set_property PACKAGE_PIN M4  [get_ports {gport_e[5]}]
 # FPGA_RST
-set_property PACKAGE_PIN D14 [get_ports {gport_ex[6]}]
+set_property PACKAGE_PIN D14 [get_ports {gport_e[6]}]
+# ADC1173./OE
+set_property PACKAGE_PIN J4  [get_ports {gport_e[7]}]
+
+# ADC1173.CLK
+set_property PACKAGE_PIN C5  [get_ports {o_adc_clk}]
+
+# ADC1173.DATA
+set_property PACKAGE_PIN J3  [get_ports {i_adc_data[0]}]
+set_property PACKAGE_PIN J2  [get_ports {i_adc_data[1]}]
+set_property PACKAGE_PIN D12 [get_ports {i_adc_data[2]}]
+set_property PACKAGE_PIN E12 [get_ports {i_adc_data[3]}]
+set_property PACKAGE_PIN F12 [get_ports {i_adc_data[4]}]
+set_property PACKAGE_PIN C11 [get_ports {i_adc_data[5]}]
+set_property PACKAGE_PIN H11 [get_ports {i_adc_data[6]}]
+set_property PACKAGE_PIN H12 [get_ports {i_adc_data[7]}]
 
 # VERSION
 set_property PACKAGE_PIN P4  [get_ports {gport_zx[0]}]
@@ -121,8 +148,8 @@ set_property PACKAGE_PIN N4  [get_ports {gport_zx[5]}]
 set_property PACKAGE_PIN M3  [get_ports {gport_zx[6]}]
 
 # ARDUINO SPI
-set_property PACKAGE_PIN A2 [get_ports rst_n]
-set_property PACKAGE_PIN B2 [get_ports spi_fss]
+set_property PACKAGE_PIN A2  [get_ports rst_n]
+set_property PACKAGE_PIN B2  [get_ports spi_fss]
 # set_property PACKAGE_PIN H2 [get_ports spi_clk]
 # set_property PACKAGE_PIN B1 [get_ports spi_in]
 # set_property PACKAGE_PIN H1 [get_ports spi_out]

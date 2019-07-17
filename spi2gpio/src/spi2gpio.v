@@ -29,7 +29,7 @@ module spi2gpio (
 	inout [2:0] gport_dx,
 
 	// gpio group E
-	inout [6:0] gport_ex,
+	inout [7:0] gport_e,
 
 	// gpio group Z
 	inout [6:0] gport_zx,
@@ -41,7 +41,11 @@ module spi2gpio (
 	`endif
 
 	// sk6805
-	output sk6805_do
+	output sk6805_do,
+
+	// adc1173
+	output o_adc_clk,
+	input [7:0] i_adc_data
 );
 	/* global clock */
 	reg clk;
@@ -65,11 +69,9 @@ module spi2gpio (
 
 	wire [7:0] gport_b;
 	wire [7:0] gport_d;
-	wire [7:0] gport_e;
 	wire [7:0] gport_z;
 	assign gport_b = {gport_bx[3:2], 4'bzzzz,  gport_bx[1:0]};
 	assign gport_d = {gport_dx[2:1], 5'bzzzzz, gport_dx[0]};
-	assign gport_e = {1'bz,     gport_ex[6:0]};
 	assign gport_z = {gport_zx[6:3], 1'bz, gport_zx[2:0]};
 
 /* ===========================================================================*/
@@ -197,7 +199,7 @@ module spi2gpio (
 			byte_rcv_l = byte_rcv;
 	end
 
-	assign cycle_sample = byte_rcv_l != byte_rcv && byte_rcv != 0 && sync_r == 2'b0;
+	assign cycle_sample = byte_rcv_l == 0 && byte_rcv != 0 && sync_r == 2'b0;
 	always @(negedge rst_n or posedge clk) begin
 		if (!rst_n)
 			sync_r[0] = 0;
@@ -235,18 +237,19 @@ module spi2gpio (
 	end
 
 	/* spi_wr/wr_addr use spi_st_addr's data */
-	reg spi_wr;
 	reg  [`REG_ADDR_SZ - 1:0] wr_addr;
+	wire spi_wr = cycle_wr && spi_st == spi_st_data && spi_wr_r;
+	reg spi_wr_r;
 	/* spi_wdata      use spi_st_data's data */
 	wire [7:0] spi_wdata;
 
 	/* spi_rd/rd_addr use spi_st_addr's data */
 	wire [`REG_ADDR_SZ - 1:0] rd_addr;
-	wire spi_rd;
+	wire spi_rd = cycle_rd && spi_st == spi_st_addr && ~spi_rcv[7];
 /*
 	always @(posedge clk) begin
 		gpa_oe = 8'hff;
-		gpa_odata = {wr_addr, spi_wr};
+		gpa_odata = {wr_addr, spi_wr_r};
 	end
 */
 
@@ -390,8 +393,8 @@ module spi2gpio (
 	wire uart_ri;
 	wire [7:0] uart_rcv;
 	wire uart_tfr_busy;
-	wire uart_rd_n = !(cycle_rd && spi_st == spi_st_addr && spi_rd && rd_addr == `UART_DATA_ADDR);
-	wire uart_wr_n = !(cycle_wr && spi_st == spi_st_data && spi_wr && wr_addr == `UART_DATA_ADDR);
+	wire uart_rd_n = !(spi_rd && rd_addr == `UART_DATA_ADDR);
+	wire uart_wr_n = !(spi_wr && wr_addr == `UART_DATA_ADDR);
 
 	uart_cell uart_cell_0(
 		.i_clk(clk),
@@ -413,7 +416,7 @@ module spi2gpio (
 	`define SK6805_DATA_ADDR	'h15
 	wire [7:0] sk6805_data;
 	reg  [7:0] sk6805_ctrl;
-	wire sk6805_wr_n = !(cycle_wr && spi_st == spi_st_data && spi_wr && wr_addr == `SK6805_DATA_ADDR);
+	wire sk6805_wr_n = !(spi_wr && wr_addr == `SK6805_DATA_ADDR);
 
 	sk6805 sk_leds(
 		.i_clk(clk),
@@ -423,6 +426,20 @@ module spi2gpio (
 		.i_data(spi_wdata),
 		.o_data(sk6805_data),
 		.o_sk(sk6805_do)
+	);
+
+/* ===========================================================================*/
+/* ADC1173 */
+/* ===========================================================================*/
+	`define ADC1173_DATA_ADDR	'h1F
+	wire [7:0] adc1173_data;
+
+	adc1173 adc_unit(
+		.i_clk(clk),
+		.i_rst_n(rst_n),
+		.o_data(adc1173_data),
+		.i_adc_data(i_adc_data),
+		.o_adc_clk(o_adc_clk)
 	);
 
 /* ===========================================================================*/
@@ -442,10 +459,10 @@ module spi2gpio (
 	/* SAVING WRITING ADDRESS */
 	always @(posedge clk or negedge rst_n) begin
 		if (!rst_n) begin
-			spi_wr = 0;
+			spi_wr_r = 0;
 			wr_addr = 0;
 		end else if (cycle_sample && spi_st == spi_st_addr) begin
-			spi_wr  = spi_rcv[7];
+			spi_wr_r  = spi_rcv[7];
 			wr_addr = spi_rcv[`REG_ADDR_SZ - 1:0];
 		end
 	end
@@ -479,7 +496,7 @@ module spi2gpio (
 
 			sk6805_ctrl = 8'h00;
 
-		end else if (cycle_wr && spi_st == spi_st_data && spi_wr) begin
+		end else if (spi_wr) begin
 			case (wr_addr)
 			'h00: gpa_oe    = spi_wdata;
 			'h01: gpa_odata = spi_wdata;
@@ -516,7 +533,6 @@ module spi2gpio (
 /* SPI REGISTER READ */
 /* ===========================================================================*/
 	assign rd_addr = spi_rcv[`REG_ADDR_SZ - 1:0];
-	assign spi_rd = ~spi_rcv[7];
 	`define SPI_DUMMY	8'h5A
 
 	/* register reading */
@@ -526,7 +542,7 @@ module spi2gpio (
 		else if (cycle_rd && spi_st == spi_st_data)
 			// when command phase, spi output with SPI_DUMMY
 			spi_snd = `SPI_DUMMY;
-		else if (cycle_rd && spi_st == spi_st_addr && spi_rd) begin
+		else if (spi_rd) begin
 			case (rd_addr)
 			'h00: spi_snd = gpa_oe;
 			'h01: spi_snd = gpa_odata;
@@ -563,6 +579,8 @@ module spi2gpio (
 			'h1C: spi_snd = gpz_oe;
 			'h1D: spi_snd = gpz_odata;
 			'h1E: spi_snd = gpz_idata;
+
+			`ADC1173_DATA_ADDR: spi_snd = adc1173_data;
 
 			default: spi_snd = 8'h0;
 				/*

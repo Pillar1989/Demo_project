@@ -23,6 +23,7 @@ add_files -norecurse ${prj_dir}/src/freq_div.v
 # add_files -norecurse ${prj_dir}/src/led_segment.v
 add_files -norecurse ${prj_dir}/src/milisec_clk.v
 add_files -norecurse ${prj_dir}/src/sk6805.v
+add_files -norecurse ${prj_dir}/src/adc1173.v
 add_files -norecurse ${prj_dir}/src/freq_divider.vhd
 add_files -norecurse ${prj_dir}/src/shifter.vhd
 add_files -norecurse ${prj_dir}/src/uart_cell.vhd
