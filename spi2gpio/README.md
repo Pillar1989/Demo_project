@@ -113,6 +113,11 @@ SPI Registers
             bit 0xF8  reserved
   * 0x15  - SK6805_DATA color data
 
+  * 0x16  - DAC_DATA0 DAC7311 low  8-bits,
+            written to initiate a conversion/transfer
+  * 0x17  - DAC_DATA1 DAC7311 high 8-bits,
+            prepare high 8-bits to transfer only.
+
   * 0x18  - UART data, receiving & transmit
   * 0x19  - UART state,
             bit 0x10 transmit busy

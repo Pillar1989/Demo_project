@@ -99,6 +99,11 @@
             bit 0xF8  reserved
   * 0x15  - SK6805_DATA color data
 
+  * 0x16  - DAC_DATA0 DACx311 low  8-bits(DB7  - DB0),
+            written to initiate a conversion/transfer
+  * 0x17  - DAC_DATA1 DACx311 high 8-bits(DB15 - DB8),
+            prepare high 8-bits to transfer only.
+
   * 0x18  - UART data, receiving & transmit
   * 0x19  - UART state,
             bit 0x10 transmit busy
@@ -112,7 +117,7 @@
 
  The circuit:
   * RST - to digital pin  9 (Logic reset)
-  * CS  - to digital pin  10 (SS pin)
+  * CS  - to digital pin 10 (SS pin)
   * SDI - to digital pin 11 (MOSI pin)
   * SDO - to digital pin 12 (MISO pin)
   * CLK - to digital pin 13 (SCK pin)
@@ -154,6 +159,9 @@ enum {
 
   SK6805_CTRL = 0x14,
   SK6805_DATA,
+
+  DAC_DATA0 = 0x16,
+  DAC_DATA1,
 
   UART_DATA = 0x18,
   #define UART_STAT_TX_BUSY  0x10
@@ -601,7 +609,15 @@ void loop() {
   r = regRead(ADC_DATA);
   Serial.print("ADC : ");
   Serial.print((unsigned long)r * 3300 / 256);
-  Serial.println(" mV");
+  Serial.print(" mV (");
+  Serial.print(r);
+  Serial.print(", 0x");
+  Serial.print(r, HEX);
+  Serial.println(")");
+
+  // DAC-OUT = ADC-IN
+  regWrite(DAC_DATA0, (r << 6) & 0xC0);
+  regWrite(DAC_DATA1, (r >> 2) & 0x3F);
 
   Serial.println();
   delay(1500);
