@@ -71,6 +71,11 @@ set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[2]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[0]}]
 
+set_property IOSTANDARD LVCMOS33 [get_ports {o_dac_clk}]
+set_property IOSTANDARD LVCMOS33 [get_ports {o_dac_sync_n}]
+set_property IOSTANDARD LVCMOS33 [get_ports {o_dac_data}]
+
+
 # FPGA_IO0 - FPGA_IO7
 set_property PACKAGE_PIN N14 [get_ports {gport_a[0]}]
 set_property PACKAGE_PIN M14 [get_ports {gport_a[1]}]
@@ -158,5 +163,10 @@ set_property PACKAGE_PIN M5  [get_ports spi_in]
 set_property PACKAGE_PIN L5  [get_ports spi_out]
 
 # SK6805
-set_property PACKAGE_PIN N11  [get_ports sk6805_do]
+set_property PACKAGE_PIN N11 [get_ports sk6805_do]
+
+# DAC7311
+set_property PACKAGE_PIN M1  [get_ports {o_dac_clk}]
+set_property PACKAGE_PIN N1  [get_ports {o_dac_sync_n}]
+set_property PACKAGE_PIN L1  [get_ports {o_dac_data}]
 

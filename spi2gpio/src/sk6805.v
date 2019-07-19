@@ -129,7 +129,7 @@ module sk6805
 	always @(posedge i_clk or negedge i_rst_n) begin
 		if (!i_rst_n) begin
 			launch <= 0;
-			color_bits = 0;
+			color_bits <= 0;
 		end else begin
 			if (~i_wr_n) begin
 				launch <= 1;
@@ -151,7 +151,7 @@ module sk6805
 	reg sk_level;
 	always @(posedge i_clk or negedge i_rst_n) begin
 		if (!i_rst_n) begin
-			level_cnt = 0;
+			level_cnt <= 0;
 			sk_level = 0;
 		end else begin
 			if (fall_800khz) begin

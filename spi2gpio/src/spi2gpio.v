@@ -45,7 +45,12 @@ module spi2gpio (
 
 	// adc1173
 	output o_adc_clk,
-	input [7:0] i_adc_data
+	input [7:0] i_adc_data,
+
+	// dac7311
+	output o_dac_clk,
+	output o_dac_sync_n,
+	output o_dac_data
 );
 	/* global clock */
 	reg clk;
@@ -443,6 +448,28 @@ module spi2gpio (
 	);
 
 /* ===========================================================================*/
+/* DAC7311 */
+/* ===========================================================================*/
+	`define DAC_DATA0_ADDR		'h16
+	`define DAC_DATA1_ADDR		'h17
+	wire [7:0] dac_bus_data;
+	wire dac7311_wr_n = !(spi_wr && ((wr_addr == `DAC_DATA0_ADDR)
+	                                 ||(wr_addr == `DAC_DATA1_ADDR)));
+
+	dac7311 dac_unit(
+		.i_clk        (clk),
+		.i_rst_n      (rst_n),
+		.i_wr_n       (dac7311_wr_n),
+		/* wr_addr too slow, use rd_addr instead */
+		.i_addr       ((spi_st == spi_st_addr)? rd_addr[0]: wr_addr[0]),
+		.i_data       (spi_wdata),
+		.o_data       (dac_bus_data),
+		.o_dac_sync_n (o_dac_sync_n),
+		.o_dac_clk    (o_dac_clk),
+		.o_dac_data   (o_dac_data)
+	);
+
+/* ===========================================================================*/
 /* SPI REGISTER WRITE */
 /* ===========================================================================*/
 	/*
@@ -567,6 +594,9 @@ module spi2gpio (
 
 			`SK6805_CTRL_ADDR: spi_snd = sk6805_ctrl;
 			`SK6805_DATA_ADDR: spi_snd = sk6805_data;
+
+			`DAC_DATA0_ADDR: spi_snd = dac_bus_data;
+			`DAC_DATA1_ADDR: spi_snd = dac_bus_data;
 
 			`ifdef __LED_SEG
 			'h1C: spi_snd = led_nr_0;
