@@ -44,6 +44,8 @@
                 gport_e[5]        M4                FPGA_USER2
                 gport_e[6]        D14               FPGA_RST
 
+        ADC1173 gport_e[7]        J4                ADC1173./OE
+
         VERSION gport_z[0]        P4                VERSION_1
                 gport_z[1]        P3                VERSION_2
                 gport_z[2]        C14               VERSION_3
@@ -106,6 +108,8 @@
   * 0x1D  - GPZ_ODATA port Z output data
   * 0x1E  - GPZ_IDATA port Z input  data
 
+  * 0x1F  - ADC_DATA  adc1173 reading value
+
  The circuit:
   * RST - to digital pin  9 (Logic reset)
   * CS  - to digital pin  10 (SS pin)
@@ -159,6 +163,8 @@ enum {
   GPZ_OE = 0x1C,
   GPZ_ODATA,
   GPZ_IDATA,
+
+  ADC_DATA = 0x1F,
 };
 
 const byte WRITE = 0b10000000;   // SPI2GPIO write
@@ -282,7 +288,12 @@ void setup() {
 
   regWrite(GPC_OE, 0xFF);
   regWrite(GPD_OE, 0x01);
-  regWrite(GPE_OE, 0x00);
+
+  /* Enable ADC1173, set /OE to LOW */
+  regWrite(GPE_OE, 0x80);
+  v = regRead(GPE_IDATA);
+  v &= ~0x80;
+  regWrite(GPE_ODATA, v);
 
   Wire.begin();
 }
@@ -584,8 +595,14 @@ void loop() {
   } else {
     Serial.println("OK");
   }
-  Serial.println();
 
   sk6805_blink();
+
+  r = regRead(ADC_DATA);
+  Serial.print("ADC : ");
+  Serial.print((unsigned long)r * 3300 / 256);
+  Serial.println(" mV");
+
+  Serial.println();
   delay(1500);
 }

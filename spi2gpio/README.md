@@ -55,6 +55,8 @@ FPGA Connections
                 gport_e[5]        M4                FPGA_USER2
                 gport_e[6]        D14               FPGA_RST
 
+        ADC1173 gport_e[7]        J4                ADC1173./OE
+
         VERSION gport_z[0]        P4                VERSION_1
                 gport_z[1]        P3                VERSION_2
                 gport_z[2]        C14               VERSION_3
@@ -119,6 +121,8 @@ SPI Registers
   * 0x1C  - GPZ_OE    port Z output enable, 1 for output, 0 for input
   * 0x1D  - GPZ_ODATA port Z output data
   * 0x1E  - GPZ_IDATA port Z input  data
+
+  * 0x1F  - ADC_DATA  adc1173 reading value
 </pre>
 
 <br><br>
