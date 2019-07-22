@@ -52,17 +52,17 @@
 
         TXS0104E-0
                 gport_z[6]        N4                FPGA_AR_OE1
-                gport_d[6]        P13               FPGA_ESP_SDA <- AR_SDA
-                gport_d[7]        P12               FPGA_ESP_SCL <- AR_SCL
-                gport_c[0]        A12               FPGA_AR_D0   <- AR_D0
-                gport_c[1]        C12               FPGA_AR_D1   <- AR_D1
+        I2C __  gport_d[6]        P13               FPGA_ESP_SDA <- AR_SDA
+            \_  gport_d[7]        P12               FPGA_ESP_SCL <- AR_SCL
+        UART__  gport_c[0]        A12               FPGA_AR_D0   <- AR_D0
+            \_  gport_c[1]        C12               FPGA_AR_D1   <- AR_D1
 
         TXS0104E-1
                 gport_z[7]        M3                FPGA_AR_OE2
                 gport_z[4]        K4                FPGA_AR_RESET<- AR_RESET
-                spi_clk           H13               FPGA_AR_SCK  <- AR_SCK
-                spi_in            M5                FPGA_AR_MOSI <- AR_MOSI
-                spi_out           L5                FPGA_AR_MISO <- AR_MISO
+        SPI__   spi_clk           H13               FPGA_AR_SCK  <- AR_SCK
+           |_   spi_in            M5                FPGA_AR_MOSI <- AR_MOSI
+           \_   spi_out           L5                FPGA_AR_MISO <- AR_MISO
 
         DG2788A gport_z[5]        H3                FPGA_ESP_IN12
 
@@ -104,8 +104,8 @@
   * 0x17  - DAC_DATA1 DACx311 high 8-bits(DB15 - DB8),
             prepare high 8-bits to transfer only.
 
-  * 0x18  - UART data, receiving & transmit
-  * 0x19  - UART state,
+  * 0x18  - UART_DATA, UART receiving & transmit
+  * 0x19  - UART_STAT, UART state
             bit 0x10 transmit busy
             bit 0x01 data buffer with valid data
 
@@ -616,8 +616,10 @@ void loop() {
   Serial.println(")");
 
   // DAC-OUT = ADC-IN
-  regWrite(DAC_DATA0, (r << 6) & 0xC0);
+  // DATA1 first
   regWrite(DAC_DATA1, (r >> 2) & 0x3F);
+  // DATA0 last
+  regWrite(DAC_DATA0, (r << 6) & 0xC0);
 
   Serial.println();
   delay(1500);
