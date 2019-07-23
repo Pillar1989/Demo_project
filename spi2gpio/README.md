@@ -44,6 +44,13 @@ FPGA Connections
                 gport_b[0]        P5                FPGA_IO8
                 gport_b[1]        E11               FPGA_IO9
 
+        QSPI    gport_b[2]        L14               FPGA_QSPI_Q
+                gport_b[3]        P2                FPGA_QSPI_D
+                gport_b[4]        D13               FPGA_QSPI_HD
+                gport_b[5]        J13               FPGA_QSPI_WP
+                gport_d[4]        H14               FPGA_QSPI_CLK
+                gport_d[5]        M13               FPGA_QSPI_CS
+
         LED     gport_b[6]        J1                FPGA_LED1
                 gport_b[7]        A13               FPGA_LED2
 
@@ -60,6 +67,9 @@ FPGA Connections
         VERSION gport_z[0]        P4                VERSION_1
                 gport_z[1]        P3                VERSION_2
                 gport_z[2]        C14               VERSION_3
+
+        AR_PWR  gport_z[3]        B11               AR_DET
+                gport_d[3]        L13               AR_3V3_EN
 
         TXS0104E-0
                 gport_z[6]        N4                FPGA_AR_OE1
