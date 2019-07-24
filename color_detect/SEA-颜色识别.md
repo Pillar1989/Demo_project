@@ -43,4 +43,4 @@ FPGA为驱动中断提供输出引脚： INT1这个中断引脚都是推挽低�
 | 0x86 | APPROX_VAL | 输出 | 识别颜色的近似度，在标定颜色时指定标定颜色的近似度，在识别颜色时反馈当前识别颜色的近似度，0为完全相近，255为不相近。 |
 
 ## 总体流程如下
-![](https://github.com/CongHong/Demo_project/blob/master/color_detect/5.png)
+![](https://github.com/CongHong/Demo_project/blob/master/color_detect/5.PNG)
