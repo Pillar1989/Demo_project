@@ -11,7 +11,8 @@ Generate bitstream
   then run build.cmd.
 
 <br><br>
-Connections between FPGA and Arduino
+FPGA Connections
+----------------
 <pre>
 ==============================================================================================
       FUNCTION  LOGIC            FPGA PIN          NET/ARDUINO                reserved
@@ -41,11 +42,14 @@ Connections between FPGA and Arduino
                 gport_a[6]        B14               FPGA_IO6
                 gport_a[7]        D3                FPGA_IO7
                 gport_b[0]        P5                FPGA_IO8
-                gport_b[1]        M3                FPGA_IO9
-                gport_b[2]        C3                FPGA_IO10
-                gport_b[3]        M4                FPGA_IO11
-                gport_b[4]        C10               FPGA_IO12
-                gport_b[5]        D10               FPGA_IO13
+                gport_b[1]        E11               FPGA_IO9
+
+        QSPI    gport_b[2]        L14               FPGA_QSPI_Q
+                gport_b[3]        P2                FPGA_QSPI_D
+                gport_b[4]        D13               FPGA_QSPI_HD
+                gport_b[5]        J13               FPGA_QSPI_WP
+                gport_d[4]        H14               FPGA_QSPI_CLK
+                gport_d[5]        M13               FPGA_QSPI_CS
 
         LED     gport_b[6]        J1                FPGA_LED1
                 gport_b[7]        A13               FPGA_LED2
@@ -54,24 +58,36 @@ Connections between FPGA and Arduino
                 gport_e[1]        L2                FPGA_K2
                 gport_e[2]        L3                FPGA_K3
                 gport_e[3]        K3                FPGA_K4
+                gport_e[4]        C3                FPGA_USER1
+                gport_e[5]        M4                FPGA_USER2
+                gport_e[6]        D14               FPGA_RST
+
+        ADC1173 gport_e[7]        J4                ADC1173./OE
 
         VERSION gport_z[0]        P4                VERSION_1
                 gport_z[1]        P3                VERSION_2
                 gport_z[2]        C14               VERSION_3
-                gport_z[3]        D14               VERSION_4
 
-        TXS0108E gport_z[7]        N4               FPGA_AR_OE
-                                                    FPGA_ESP_SDA <- AR_SDA
-                                                    FPGA_ESP_SCL <- AR_SCL
-                gport_c[0]        A12               FPGA_AR_D0   <- AR_D0
-                gport_c[1]        C12               FPGA_AR_D1   <- AR_D1
-                                                    FPGA_AR_RESET<- AR_RESET
-                spi_clk           H13               FPGA_AR_SCK  <- AR_SCK
-                spi_in            M5                FPGA_AR_MOSI <- AR_MOSI
-                spi_out           L5                FPGA_AR_MISO <- AR_MISO
+        AR_PWR  gport_z[3]        B11               AR_DET
+                gport_d[3]        L13               AR_3V3_EN
 
-        DG2788A gport_z[6]        H3                FPGA_ESP_IN12
-                gport_z[5]        E11               FPGA_ESP_IN34
+        TXS0104E-0
+                gport_z[6]        N4                FPGA_AR_OE1
+        I2C __  gport_d[6]        P13               FPGA_ESP_SDA <- AR_SDA
+            \_  gport_d[7]        P12               FPGA_ESP_SCL <- AR_SCL
+        UART__  gport_c[0]        A12               FPGA_AR_D0   <- AR_D0
+            \_  gport_c[1]        C12               FPGA_AR_D1   <- AR_D1
+
+        TXS0104E-1
+                gport_z[7]        M3                FPGA_AR_OE2
+                gport_z[4]        K4                FPGA_AR_RESET<- AR_RESET
+        SPI__   spi_clk           H13               FPGA_AR_SCK  <- AR_SCK
+           |_   spi_in            M5                FPGA_AR_MOSI <- AR_MOSI
+           \_   spi_out           L5                FPGA_AR_MISO <- AR_MISO
+
+        DG2788A gport_z[5]        H3                FPGA_ESP_IN12
+
+        SK6805  sk6805_do         N11               FPGA_RGB
 </pre>
 
 <br><br>
@@ -102,17 +118,29 @@ SPI Registers
   * 0x11  - GPE_ODATA port E output data
   * 0x12  - GPE_IDATA port E input  data
 
-  * 0x18  - UART data, receiving & transmit
-  * 0x19  - UART state,
+  * 0x14  - SK6805_CTRL sk6805 control
+            bit 0x07  color address 0 - 5 (B0, R0, G0, B1, R1, G1)
+            bit 0xF8  reserved
+  * 0x15  - SK6805_DATA color data
+
+  * 0x16  - DAC_DATA0 DACx311 low  8-bits(DB7  - DB0),
+            written to initiate a conversion/transfer
+  * 0x17  - DAC_DATA1 DACx311 high 8-bits(DB15 - DB8),
+            prepare high 8-bits to transfer only.
+
+  * 0x18  - UART_DATA, UART receiving & transmit
+  * 0x19  - UART_STAT, UART state
             bit 0x10 transmit busy
             bit 0x01 data buffer with valid data
 
   * 0x1C  - GPZ_OE    port Z output enable, 1 for output, 0 for input
   * 0x1D  - GPZ_ODATA port Z output data
   * 0x1E  - GPZ_IDATA port Z input  data
+
+  * 0x1F  - ADC_DATA  adc1173 reading value
 </pre>
 
 <br><br>
 Arduino Code
 ------------
-see FPGAPortControl\FPGAPortControl.ino
+see [FPGAPortControl\FPGAPortControl.ino](FPGAPortControl/FPGAPortControl.ino)
