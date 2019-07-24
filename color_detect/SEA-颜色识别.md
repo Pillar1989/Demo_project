@@ -5,6 +5,12 @@
 | ---------- | :-----------:  | :-----------: |
 | spi_clk | H13 | FPGA_AR_SCK  <- AR_SCK |
 | spi_in | M5 | FPGA_AR_MOSI <- AR_MOSI |
+| spi_out | L5 | FPGA_AR_MISO <- AR_MISO |
+| spi_fss | B2 | AR_D10   /SS |
+| rst_n | A2 | AR_D9 |
+| int1 | B3 | AR_D8 |
+
+FPGA和Arduino 通过SPI进行通信，通信的硬件如上。
 
 ## 测试结果
 1. 拨码开关sw1为0时处于工作状态，1为清零状态；拨码开关sw2为0时处于工作状态，1为锁定状态。
