@@ -3,7 +3,8 @@
 ## 硬件连接
 | FUNCTION  LOGIC | FPGA PIN | NET/ARDUINO |
 | ---------- | :-----------:  | :-----------: |
-| 第一行     | 第一列     | 第二列     |
+| spi_clk | H13 | FPGA_AR_SCK  <- AR_SCK |
+| spi_in | M5 | FPGA_AR_MOSI <- AR_MOSI |
 
 ## 测试结果
 1. 拨码开关sw1为0时处于工作状态，1为清零状态；拨码开关sw2为0时处于工作状态，1为锁定状态。
