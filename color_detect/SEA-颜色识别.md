@@ -2,6 +2,7 @@
 
 ## 硬件连接
 |FUNCTION  LOGIC |FPGA PIN|NET/ARDUINO|reserved|
+
 |spi_clk         |H13     |FPGA_AR_SCK  <- AR_SCK|   |
 
 ## 测试结果
