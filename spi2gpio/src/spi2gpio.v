@@ -26,7 +26,7 @@ module spi2gpio (
 	inout [7:0] gport_c,
 
 	// gpio group D
-	inout [5:0] gport_dx,
+	inout [6:0] gport_dx,
 
 	// gpio group E
 	inout [7:0] gport_e,
@@ -73,7 +73,7 @@ module spi2gpio (
 	wire [7:0] spi_rcv;
 
 	wire [7:0] gport_d;
-	assign gport_d = {gport_dx[5:1], 2'bzz, gport_dx[0]};
+	assign gport_d = {gport_dx[6:1], 1'bz, gport_dx[0]};
 
 /* ===========================================================================*/
 /* SPI clock sync to high frequency clock */

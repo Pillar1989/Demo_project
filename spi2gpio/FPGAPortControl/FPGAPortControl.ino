@@ -53,6 +53,9 @@
 
         ADC1173 gport_e[7]        J4                ADC1173./OE
 
+        LSM6DS3TR
+                gport_d[2]        L12               IMU_INT2
+
         VERSION gport_z[0]        P4                VERSION_1
                 gport_z[1]        P3                VERSION_2
                 gport_z[2]        C14               VERSION_3
@@ -206,6 +209,7 @@ unsigned regRead(int address) {
 
 unsigned regWrite(int address, int value) {
   unsigned v;
+
   // take the SS pin low to select the chip:
   digitalWrite(slaveSelectPin, LOW);
   //  send in the address and value via SPI:

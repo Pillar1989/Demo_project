@@ -17,10 +17,10 @@ FPGA Connections
 ==============================================================================================
       FUNCTION  LOGIC            FPGA PIN          NET/ARDUINO                reserved
 ==============================================================================================
-        SPI                       H2                AR_D13   /SCK            gport_d[5]
-                                  H1                AR_D12   /MISO           gport_d[4]
-                                  B1                AR_D11   /MOSI           gport_d[3]
-                spi_fss           B2                AR_D10   /SS             gport_d[2]
+        SPI                       H2                AR_D13   /SCK
+                                  H1                AR_D12   /MISO
+                                  B1                AR_D11   /MOSI
+                spi_fss           B2                AR_D10   /SS
                 rst_n             A2                AR_D9                    gport_d[1]
 
                 gport_d[0]        B3                AR_D8
@@ -63,6 +63,9 @@ FPGA Connections
                 gport_e[6]        D14               FPGA_RST
 
         ADC1173 gport_e[7]        J4                ADC1173./OE
+
+        LSM6DS3TR
+                gport_d[2]        L12               IMU_INT2
 
         VERSION gport_z[0]        P4                VERSION_1
                 gport_z[1]        P3                VERSION_2
