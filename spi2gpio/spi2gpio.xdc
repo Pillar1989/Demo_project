@@ -21,6 +21,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports {gport_b[*]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_c[*]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_dx[*]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_e[*]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gport_fx[*]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_z[*]}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {o_adc_clk}]
@@ -73,17 +74,22 @@ set_property PACKAGE_PIN B5  [get_ports {gport_c[5]}]
 set_property PACKAGE_PIN A4  [get_ports {gport_c[6]}]
 set_property PACKAGE_PIN A3  [get_ports {gport_c[7]}]
 
-set_property PACKAGE_PIN B3  [get_ports {gport_dx[0]}]
+set_property PACKAGE_PIN B3  [get_ports {gport_fx[0]}]
+# ARDUINO_D11 - D13
+set_property PACKAGE_PIN B1  [get_ports {gport_fx[1]}]
+set_property PACKAGE_PIN H1  [get_ports {gport_fx[2]}]
+set_property PACKAGE_PIN H2  [get_ports {gport_fx[3]}]
+
 # IMU_INT2
-set_property PACKAGE_PIN L12 [get_ports {gport_dx[1]}]
+set_property PACKAGE_PIN L12 [get_ports {gport_dx[0]}]
 # AR_3V3_EN
-set_property PACKAGE_PIN L13 [get_ports {gport_dx[2]}]
+set_property PACKAGE_PIN L13 [get_ports {gport_dx[1]}]
 # FPGA_QSPI
-set_property PACKAGE_PIN H14 [get_ports {gport_dx[3]}]
-set_property PACKAGE_PIN M13 [get_ports {gport_dx[4]}]
+set_property PACKAGE_PIN H14 [get_ports {gport_dx[2]}]
+set_property PACKAGE_PIN M13 [get_ports {gport_dx[3]}]
 # FPGA I2C
-set_property PACKAGE_PIN P13 [get_ports {gport_dx[5]}]
-set_property PACKAGE_PIN P12 [get_ports {gport_dx[6]}]
+set_property PACKAGE_PIN P13 [get_ports {gport_dx[4]}]
+set_property PACKAGE_PIN P12 [get_ports {gport_dx[5]}]
 
 # K1 - K4
 set_property PACKAGE_PIN M2  [get_ports {gport_e[0]}]

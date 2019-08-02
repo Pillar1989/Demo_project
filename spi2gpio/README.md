@@ -15,15 +15,15 @@ FPGA Connections
 ----------------
 <pre>
 ==============================================================================================
-      FUNCTION  LOGIC            FPGA PIN          NET/ARDUINO                reserved
+      FUNCTION  LOGIC            FPGA PIN          NET/ARDUINO              reserved/not-used
 ==============================================================================================
-        SPI                       H2                AR_D13   /SCK
-                                  H1                AR_D12   /MISO
-                                  B1                AR_D11   /MOSI
-                spi_fss           B2                AR_D10   /SS
-                rst_n             A2                AR_D9                    gport_d[1]
+        SPI     gport_f[5]        H2                AR_D13   /SCK
+                gport_f[4]        H1                AR_D12   /MISO
+                gport_f[3]        B1                AR_D11   /MOSI
+                spi_fss           B2                AR_D10   /SS             gport_f[2]
+                rst_n             A2                AR_D9                    gport_f[1]
 
-                gport_d[0]        B3                AR_D8
+                gport_f[0]        B3                AR_D8
                 gport_c[7]        A3                AR_D7
                 gport_c[6]        A4                AR_D6
                 gport_c[5]        B5                AR_D5
@@ -141,6 +141,10 @@ SPI Registers
   * 0x1E  - GPZ_IDATA port Z input  data
 
   * 0x1F  - ADC_DATA  adc1173 reading value
+
+  * 0x20  - GPF_OE    port F output enable, 1 for output, 0 for input
+  * 0x21  - GPF_ODATA port F output data
+  * 0x22  - GPF_IDATA port F input  data
 </pre>
 
 <br><br>

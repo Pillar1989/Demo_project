@@ -2,7 +2,7 @@
 // tary, 18:20 2011-10-8
 
 // `define OLD_SPI_OUT_R
-`define REG_ADDR_SZ		5
+`define REG_ADDR_SZ		6
 //`define __LED_SEG		1
 
 module spi2gpio (
@@ -26,10 +26,13 @@ module spi2gpio (
 	inout [7:0] gport_c,
 
 	// gpio group D
-	inout [6:0] gport_dx,
+	inout [5:0] gport_dx,
 
 	// gpio group E
 	inout [7:0] gport_e,
+
+	// gpio group F
+	inout [3:0] gport_fx,
 
 	// gpio group Z
 	inout [7:0] gport_z,
@@ -73,7 +76,10 @@ module spi2gpio (
 	wire [7:0] spi_rcv;
 
 	wire [7:0] gport_d;
-	assign gport_d = {gport_dx[6:1], 1'bz, gport_dx[0]};
+	assign gport_d = {gport_dx[5:0], 2'bz};
+
+	wire [7:0] gport_f;
+	assign gport_f = {2'bz, gport_fx[3:1], 2'bz, gport_fx[0]};
 
 /* ===========================================================================*/
 /* SPI clock sync to high frequency clock */
@@ -351,6 +357,24 @@ module spi2gpio (
 	assign gport_e[7] = gpe_oe[7]? gpe_odata[7]: 1'bz;
 
 /* ===========================================================================*/
+/* GPIO F */
+/* ===========================================================================*/
+	reg  [7:0] gpf_oe;
+	reg  [7:0] gpf_odata;
+	wire [7:0] gpf_idata;
+
+	assign gpf_idata = gport_f;
+
+	assign gport_f[0] = gpf_oe[0]? gpf_odata[0]: 1'bz;
+	assign gport_f[1] = gpf_oe[1]? gpf_odata[1]: 1'bz;
+	assign gport_f[2] = gpf_oe[2]? gpf_odata[2]: 1'bz;
+	assign gport_f[3] = gpf_oe[3]? gpf_odata[3]: 1'bz;
+	assign gport_f[4] = gpf_oe[4]? gpf_odata[4]: 1'bz;
+	assign gport_f[5] = gpf_oe[5]? gpf_odata[5]: 1'bz;
+	assign gport_f[6] = gpf_oe[6]? gpf_odata[6]: 1'bz;
+	assign gport_f[7] = gpf_oe[7]? gpf_odata[7]: 1'bz;
+
+/* ===========================================================================*/
 /* GPIO Z */
 /* ===========================================================================*/
 	reg  [7:0] gpz_oe;
@@ -509,6 +533,9 @@ module spi2gpio (
 			gpe_oe = 8'h00;
 			gpe_odata = 0;
 
+			gpf_oe = 8'h00;
+			gpf_odata = 0;
+
 			gpz_oe    = 8'h80;
 			gpz_odata = 8'h80;
 
@@ -547,6 +574,8 @@ module spi2gpio (
 
 			`SK6805_CTRL_ADDR: sk6805_ctrl = spi_wdata;
 
+			'h20: gpf_oe    = spi_wdata;
+			'h21: gpf_odata = spi_wdata;
 			default: ;
 			endcase
 		end
@@ -607,6 +636,10 @@ module spi2gpio (
 			'h1E: spi_snd = gpz_idata;
 
 			`ADC1173_DATA_ADDR: spi_snd = adc1173_data;
+
+			'h20: spi_snd = gpf_oe;
+			'h21: spi_snd = gpf_odata;
+			'h22: spi_snd = gpf_idata;
 
 			default: spi_snd = 8'h0;
 				/*

@@ -6,13 +6,13 @@
 ==============================================================================================
       FUNCTION  LOGIC            FPGA PIN          NET/ARDUINO                reserved
 ==============================================================================================
-        SPI                       H2                AR_D13   /SCK            gport_d[5]
-                                  H1                AR_D12   /MISO           gport_d[4]
-                                  B1                AR_D11   /MOSI           gport_d[3]
-                spi_fss           B2                AR_D10   /SS             gport_d[2]
-                rst_n             A2                AR_D9                    gport_d[1]
+        SPI     gport_f[5]        H2                AR_D13   /SCK
+                gport_f[4]        H1                AR_D12   /MISO
+                gport_f[3]        B1                AR_D11   /MOSI
+                spi_fss           B2                AR_D10   /SS             gport_f[2]
+                rst_n             A2                AR_D9                    gport_f[1]
 
-                gport_d[0]        B3                AR_D8
+                gport_f[0]        B3                AR_D8
                 gport_c[7]        A3                AR_D7
                 gport_c[6]        A4                AR_D6
                 gport_c[5]        B5                AR_D5
@@ -128,6 +128,10 @@
 
   * 0x1F  - ADC_DATA  adc1173 reading value
 
+  * 0x20  - GPF_OE    port F output enable, 1 for output, 0 for input
+  * 0x21  - GPF_ODATA port F output data
+  * 0x22  - GPF_IDATA port F input  data
+
  The circuit:
   * RST - to digital pin  9 (Logic reset)
   * CS  - to digital pin 10 (SS pin)
@@ -186,6 +190,10 @@ enum {
   GPZ_IDATA,
 
   ADC_DATA = 0x1F,
+
+  GPF_OE = 0x20,
+  GPF_ODATA,
+  GPF_IDATA,
 };
 
 const byte WRITE = 0b10000000;   // SPI2GPIO write
