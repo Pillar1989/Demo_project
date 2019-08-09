@@ -25,15 +25,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports {gport_fx[*]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gport_z[*]}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {o_adc_clk}]
-
-set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[7]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[6]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[5]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[4]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[3]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[2]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[1]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {i_adc_data[*]}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {o_dac_clk}]
 set_property IOSTANDARD LVCMOS33 [get_ports {o_dac_sync_n}]
@@ -80,16 +72,18 @@ set_property PACKAGE_PIN B1  [get_ports {gport_fx[1]}]
 set_property PACKAGE_PIN H1  [get_ports {gport_fx[2]}]
 set_property PACKAGE_PIN H2  [get_ports {gport_fx[3]}]
 
+# IMU_AD
+set_property PACKAGE_PIN J14 [get_ports {gport_dx[0]}]
 # IMU_INT2
-set_property PACKAGE_PIN L12 [get_ports {gport_dx[0]}]
+set_property PACKAGE_PIN L12 [get_ports {gport_dx[1]}]
 # AR_3V3_EN
-set_property PACKAGE_PIN L13 [get_ports {gport_dx[1]}]
+set_property PACKAGE_PIN L13 [get_ports {gport_dx[2]}]
 # FPGA_QSPI
-set_property PACKAGE_PIN H14 [get_ports {gport_dx[2]}]
-set_property PACKAGE_PIN M13 [get_ports {gport_dx[3]}]
+set_property PACKAGE_PIN H14 [get_ports {gport_dx[3]}]
+set_property PACKAGE_PIN M13 [get_ports {gport_dx[4]}]
 # FPGA I2C
-set_property PACKAGE_PIN P13 [get_ports {gport_dx[4]}]
-set_property PACKAGE_PIN P12 [get_ports {gport_dx[5]}]
+set_property PACKAGE_PIN P13 [get_ports {gport_dx[5]}]
+set_property PACKAGE_PIN P12 [get_ports {gport_dx[6]}]
 
 # K1 - K4
 set_property PACKAGE_PIN M2  [get_ports {gport_e[0]}]

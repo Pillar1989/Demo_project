@@ -26,7 +26,7 @@ module spi2gpio (
 	inout [7:0] gport_c,
 
 	// gpio group D
-	inout [5:0] gport_dx,
+	inout [6:0] gport_dx,
 
 	// gpio group E
 	inout [7:0] gport_e,
@@ -76,7 +76,7 @@ module spi2gpio (
 	wire [7:0] spi_rcv;
 
 	wire [7:0] gport_d;
-	assign gport_d = {gport_dx[5:0], 2'bz};
+	assign gport_d = {gport_dx[6:0], 1'bz};
 
 	wire [7:0] gport_f;
 	assign gport_f = {2'bz, gport_fx[3:1], 2'bz, gport_fx[0]};

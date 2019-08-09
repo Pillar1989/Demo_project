@@ -54,6 +54,7 @@
         ADC1173 gport_e[7]        J4                ADC1173./OE
 
         LSM6DS3TR
+                gport_d[1]        J14               IMU_AD
                 gport_d[2]        L12               IMU_INT2
 
         VERSION gport_z[0]        P4                VERSION_1
