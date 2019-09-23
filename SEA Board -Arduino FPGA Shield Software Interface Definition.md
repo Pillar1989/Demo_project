@@ -22,8 +22,6 @@ SEA-S7板卡（Spartan Edge Accelerator Board）集成Spartan7 FPGA与ESP32芯�
 <p align = "center">
 </p>
 
-SEA-S7通讯接口示意图
-
 SEA-S7 可单板使用，也可作为Arduino扩展子板，本文仅考虑作为Arduino扩展子板的应用场景。
 
 
