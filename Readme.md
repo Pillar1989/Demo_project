@@ -1,9 +1,9 @@
 本仓库用于存放SEA_S7 Board参考案例，请为每个项目新建一个目录，目录内包含可执行文件、使用手册和工程源代码。目录结构如下:
   > Project_Name
   > > Readme (project Introduction, software interface definition)  
-  > > FPGA Bitstream 
-  > > ESP32 source code and executable file
-  > > Arduino source code and executable file
+  > > FPGA Bitstream   
+  > > ESP32 source code and executable file  
+  > > Arduino source code and executable file   
 
 
 
