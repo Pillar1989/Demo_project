@@ -26,3 +26,4 @@
 
 为便于统一接口，请参考 [SEA Board -Arduino FPGA Shield Software Interface Definition](SEA-Board-Arduino-FPGA-Shield-Software-Interface-Definition.md)来为Arduino主控扩展应用。
 
+如有任何问题，欢迎发送邮件到[xup_china@xilinx.com](mailto:xup_china@xilinx.com)
