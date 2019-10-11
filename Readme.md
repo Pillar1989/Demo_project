@@ -9,8 +9,8 @@
 
 | 序号 | 名称                                                         | 描述                                       |
 | ---- | ------------------------------------------------------------ | ------------------------------------------ |
-| 1    | [MIPI-In-HDMI-Out](/MIPI-In-HDMI-Out)                        | MIPI接口摄像头与HDMI显示器案例             |
-| 2    | [Color-Recognition](/Color-Recognition)                      | 颜色识别与物体追踪案例                     |
+| 1    | [MIPI-In-HDMI-Out](/MIPI-In-HDMI-Out)                        | MIPI摄像头输入与HDMI输出Vivado工程         |
+| 2    | [Color-Recognition-and-Object-Traking](/Color-Recognition-and-Object-Traking)                      | 颜色识别与物体追踪案例                     |
 | 3    | [spi2gpio](/spi2gpio)                                        | 为Arduino提供GPIO/UART/ADC/DAC/RGB-LED扩展 |
 | 4    | [ESP32-QSPI-FPGA-Waveform-Generator](/ESP32-QSPI-FPGA-Waveform-Generator) | ESP32控制的信号发生器案例                  |
 | 5    | [Arbitrary_Waveform_Generator_For_Arduino](/Arbitrary_Waveform_Generator_For_Arduino) | 信号发生器案（需要Arduino配置）            |

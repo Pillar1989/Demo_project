@@ -8,9 +8,12 @@
 
 对应解密模块是将数据在AWS云上下载到接收者的ESP32上，在通过QSPI传输到FPGA进行解密，最后将揭解密据通过IO口输出出来。
 
-![](/image/Figure1.PNG)
+![](./image/Figure1.PNG)
 
 ## 项目总体架构
 
-![](/image/Figure2.PNG)
+![](./image/Figure2.PNG)
 
+
+
+Vivado源码下载地址：https://pan.baidu.com/s/1crCyEjgbWyoZ2YVLHePOSQ

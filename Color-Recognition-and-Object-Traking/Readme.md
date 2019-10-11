@@ -66,3 +66,5 @@ FPGA为驱动中断提供输出引脚： INT1这个中断引脚都是推挽低�
 9、	当收到命令0x86时，会反馈出颜色的近似值，0为完全相近，255为不相近。
 
 测试步骤请阅读[Test_procedure.md](Test_procedure.md)
+
+最新源码下载地址：https://pan.baidu.com/s/1ry9egntzld86hZIaETztRg

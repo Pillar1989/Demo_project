@@ -4,7 +4,7 @@
 
  本设计的主要功能是对三角形、圆形、矩形这三种图形进行识别，并将识别后的数据通过SPI通信协议传输给Arduino。程序运行后会在显示器显示三条红色标志线，将需要检测的图形放入标志线中间即可检测出相应的形状，具体使用方法本文以三角形举例：见下图。
 
-![img](/image/Capture.PNG)
+![img](./image/Capture.PNG)
 
  第四条线的作用是指示识别就多,红色、白色、浅蓝色分别代表圆形三角形和矩形。同时在Arduino端发送地址0x82即可输出8bit数据，也可以通过QSPI传输到ESP32上，具体的图形和数据、颜色对应表见1.2对照表说明。
 
@@ -53,7 +53,7 @@
 当收到命令0x82时，会输出形状数据：8位数据。
 
 ## 程序架构
-[![img](/image/Capture11.PNG)](https://github.com/Zhangshuyu4653/Demo_project/blob/master/geometric figure/image/Capture11.PNG)
+[![img](./image/Capture11.PNG)](https://github.com/Zhangshuyu4653/Demo_project/blob/master/geometric figure/image/Capture11.PNG)
 
 **geometric_figure**模块的主要功能是形状判断，对于图形,矩形、三角形、圆形，三者在线条X1、X2、X3三条线上的像素点位置和多少各不相同。利用此性质对三条线上的像素点进行计数，然后比较三者大小关系，通过增加阈值和绝对值大小判断相对应的图形。
 
@@ -77,13 +77,15 @@
 
 ### FPGA IO Ports
 
-[![img](/image/Pin_Assignment1.PNG)
+[![img](./image/Pin_Assignment1.PNG)
 
-[![img](/image/Pin_Assignment2.PNG)
+[![img](./image/Pin_Assignment2.PNG)
 
 ### 原理图接口及硬件连接关系
 
-根据FPGA IO Ports引脚分配图标，找到对应的硬件接口Package Pin，然后查找《PCB原理图Spartan+Edge+Accelerator+Board+v1.0》，就能查看所有期间原理层链接关系，PCB板卡物理层具体位置请根据原理图器件号，查找《元件位号图__top Spartan Edge Accelerator Board v1.0》和《元件位号图_bot Spartan Edge Accelerator Board v1.0_》。
+根据FPGA IO Ports引脚分配图标，找到对应的硬件接口Package Pin，然后查看[SCH_Spartan+Edge+Accelerator+Board+v1.0](./Hardware/SCH_Spartan+Edge+Accelerator+Board+v1.0.pdf)，就能查看所有期间原理层链接关系，PCB板卡物理层具体位置请根据原理图器件号，查看[TOP_Spartan Edge Accelerator Board v1.0](./Hardware/TOP_Spartan Edge Accelerator Board v1.0.pdf)与[BOT_Spartan Edge Accelerator Board v1.0](./Hardware/BOT_Spartan Edge Accelerator Board v1.0.pdf)。  
 
-如有问题可联系本文作者[shuyuz@xilinx.com](mailto:或联系本文作者shuyuz@xilinx.com)。
+
+​    
+最新源码下载地址：https://pan.baidu.com/s/1tS8LhWDH6jviwzTsnlASJw  
 
