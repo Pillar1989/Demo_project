@@ -83,9 +83,8 @@
 
 ### 原理图接口及硬件连接关系
 
-根据FPGA IO Ports引脚分配图标，找到对应的硬件接口Package Pin，然后查看[SCH_Spartan+Edge+Accelerator+Board+v1.0](./Hardware/SCH_Spartan+Edge+Accelerator+Board+v1.0.pdf)，就能查看所有期间原理层链接关系，PCB板卡物理层具体位置请根据原理图器件号，查看[TOP_Spartan Edge Accelerator Board v1.0](./Hardware/TOP_Spartan Edge Accelerator Board v1.0.pdf)与[BOT_Spartan Edge Accelerator Board v1.0](./Hardware/BOT_Spartan Edge Accelerator Board v1.0.pdf)。  
+根据FPGA IO Ports引脚分配图标，找到对应的硬件接口Package Pin，然后查看[SCH-Spartan-Edge-Accelerator-Board-V1.0](./SCH-Spartan-Edge-Accelerator-Board-V1.0.pdf)，就能查看所有期间原理层链接关系，PCB板卡物理层具体位置请根据原理图器件号，查看[TOP-Spartan-Edge-Accelerator-Board-V1.0](./Hardware/TOP-Spartan-Edge-Accelerator-Board-V1.0.pdf)与[BOT-Spartan-Edge-Accelerator-Board-V1.0](./BOT-Spartan-Edge-Accelerator-Board-V1.0.pdf)。  
 
 
-​    
 最新源码下载地址：https://pan.baidu.com/s/1tS8LhWDH6jviwzTsnlASJw  
 
